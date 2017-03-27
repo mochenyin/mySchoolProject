@@ -60,7 +60,7 @@ function addChatController($scope){
                 userId:sessionStorage.Key,
                 roomName:$('#roomName').val()
             };
-            $.post('/api/addChatMsg',chatData,function(res){
+            $.post('/api/addChatRoom',chatData,function(res){
                 if(res.text=='ok'){
                    boxshow('发布成功');
                     $('#titleChat').val('');

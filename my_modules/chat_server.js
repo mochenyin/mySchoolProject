@@ -78,7 +78,7 @@ var _webSocket=$io.on('connection',function(socket){
     socket.on('get name',function(msg,room,userImg,userId){
         nickNames[socket.id]=msg;
         currentRoom[socket.id]=room;
-        var imgUrl='http://olcolkmpd.bkt.clouddn.com/'+userImg+'';
+        var imgUrl=userImg+'';
         userDetail[socket.id]={
                 userId:userId,
                 userImg:imgUrl,
@@ -116,8 +116,8 @@ var _webSocket=$io.on('connection',function(socket){
             chatMessage:msg,
             userMsg:userDetail[socket.id]
         }; //构建客户端返回的对象
-        socket.emit('chat message',obj1); //发送给自己的消息 ， 如果不想打印自己发送的消息，则注释掉该句。
-        socket.broadcast.to(currentRoom[socket.id]).emit('chat message',obj2); //向其他用户发送消息
+        socket.emit('chatMsg',obj1); //发送给自己的消息 ， 如果不想打印自己发送的消息，则注释掉该句。
+        socket.broadcast.to(currentRoom[socket.id]).emit('chatMsg',obj2); //向其他用户发送消息
     });
 
     socket.on('disconnect',function() {

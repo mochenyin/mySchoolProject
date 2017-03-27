@@ -2,7 +2,7 @@
     <h3>{{title}}</h3>
     <div id="chatList">
             <a ng-repeat="(k,val) in chatClassifyList" ui-sref=".subChat({roomId:'{{val.roomId}}'})"  class="chatListRepeat">
-                <img class="chatListImg" ng-src={{val.roomImg}} />
+                <img class="chatListImg" ng-src='http://olcolkmpd.bkt.clouddn.com/{{val.roomImg}}' />
             <p class="chatListP1">{{val.roomTitle}}</p>
             <div class="chatListP2">{{val.roomDescription}}</div>
             <div class="chatListDiv">

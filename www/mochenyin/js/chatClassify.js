@@ -4,7 +4,7 @@
 function getChatClassify($scope,data){
     for(var val in data){
         if(data[val].roomImg=='none'){
-            data[val].roomImg='http://olcolkmpd.bkt.clouddn.com/Fi4IIuXEHudX40NOxXQr1FIkHXia';
+            data[val].roomImg='Fi4IIuXEHudX40NOxXQr1FIkHXia';
         }
     }
    $scope.$apply(function(){

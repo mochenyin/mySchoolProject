@@ -12,7 +12,7 @@ function subChatController($scope,roomId){
             $scope.currentRoom=resData.roomName;
             $scope.currentRoomTitle=resData.roomTitle;
             $scope.currentRoomDes=resData.roomDescription;
-            $scope.currentRoomImg=resData.roomImg=='none'?'http://olcolkmpd.bkt.clouddn.com/Fi4IIuXEHudX40NOxXQr1FIkHXia':resData.roomImg;
+            $scope.currentRoomImg=resData.roomImg=='none'?'Fi4IIuXEHudX40NOxXQr1FIkHXia':resData.roomImg;
             $scope.currentRoomId=resData.roomId;
         }
     });
@@ -101,7 +101,7 @@ function subChatController($scope,roomId){
         }
     });
 //监听服务端的chat message事件，接受每一条消息
-    socket.on('chat message',function(json){
+    socket.on('chatMsg',function(json){
         var num=Math.floor(Math.random()*oArray.length);
         var color=oArray[num];
         if(json.type=='others'){
@@ -113,10 +113,10 @@ function subChatController($scope,roomId){
                 chatMsg:json.chatMessage,
                 addCls:'myMsgLiOther'
             };
-            console.log(typeof $scope.myMsgTypeList)
-            // $scope.$apply(function(){
-            //     $scope.myMsgTypeList=$scope.myMsgTypeList.push(dat);
-            // });
+            console.log('fkriu',$scope.myMsgTypeList);
+            $scope.$apply(function(){
+                $scope.myMsgTypeList.push(dat);
+            });
             // $('#messages').append($('<li class="myMsgLiOther">').html(
             //     '<div class="msgDivOther">' +
             //     '<p><span style="color:lightseagreen">'+json.userMsg.userName+'</span> '+json.time+'</p>' +
@@ -133,9 +133,11 @@ function subChatController($scope,roomId){
                 chatMsg:json.chatMessage,
                 addCls:'myMsgLiMine'
             };
-            // $scope.$apply(function(){
-            //     $scope.myMsgTypeList=$scope.myMsgTypeList.push(dat);
-            // });
+            console.log('fkriu',$scope.myMsgTypeList);
+           $scope.$apply(function(){
+               $scope.myMsgTypeList.push(dat);
+            });
+
             // $('#messages').append($('<li class="myMsgLiMine">').html(
             //     '<div class="msgDivOther">' +
             //     '<p><span style="color:lightseagreen">'+json.userMsg.userName+'</span> '+json.time+'</p>' +

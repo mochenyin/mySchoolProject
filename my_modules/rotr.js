@@ -313,7 +313,7 @@ _rotr.apis.getChatStyle = function () {
 
 
 //发布聊天话题
-_rotr.apis.addChatMsg = function () {
+_rotr.apis.addChatRoom = function () {
 	var ctx = this;
 	var co = $co(function* () {
 		var title = ctx.query.title || ctx.request.body.title;
@@ -322,7 +322,7 @@ _rotr.apis.addChatMsg = function () {
 		var sourceLink = ctx.query.sourceLink || ctx.request.body.sourceLink;
 		var userId = ctx.query.userId || ctx.request.body.userId;
 		var roomName = ctx.query.roomName || ctx.request.body.roomName;
-		var sqlstr = "INSERT INTO room(roomTitle,roomDescription,roomStyle,roomImg,roomUserId,roomName) VALUES(?,?,?,?,?,?)";
+		var sqlstr = "INSERT INTO room(roomTitle,roomDescription,roomStyle,roomImg,roomUserId,roomName) VALUES(?,?,?,?,?,?);";
 		var paramt = [title, description,chatStyle,sourceLink,userId,roomName];
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr, paramt);
 		if (!rows) throw Error("错误");
