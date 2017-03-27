@@ -1,0 +1,99 @@
+<div class="header">
+    <div class="row">
+        <div class='col-lg-2'>
+            <h1 id="title">聆听，静谧时...</h1>
+        </div>
+        <div class='col-lg-1 tab'>
+            <h4><a ui-sref=".index" class="indexTab">首页</a></h4>
+        </div>
+        <div class='col-lg-1 tab'>
+            <h4><a ui-sref=".findPage" class="indexTab">发现</a></h4>
+        </div>
+        <div class='col-lg-1 tab'>
+            <h4><a ui-sref=".chatPage.classify({name:'memory'})" class="indexTab">聊天室</a></h4>
+        </div>
+        <div class='col-lg-4 tab'>
+            <h4><a ui-sref=".personalPage" class="indexTab">个人中心</a></h4>
+        </div>
+        <div class='col-lg-1 tab' id="userMsg">
+
+        </div>
+        <div class='col-lg-2 tab' id="toggleStaute">
+
+        </div>
+    </div>
+</div>
+<div ui-view class="body"></div>
+<div class="footer">
+    <div id="text">
+        <h4>版权所有者：莫沉吟　　个人主页：<a href="http://www.ltmochenyin.info">www.ltmochenyin.info</a></h4>
+        <h5>&copy;liuting  　版本号：V1.0.0-2017.03.01</h5>
+    </div>
+</div>
+<!--头像更换模态框-->
+<div class="modal fade bs-example-modal-lg" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">更换头像</h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-pic">
+                    <div class="image-editor">
+                        <div class="row">
+                            <div style='width:250px;margin: 0 auto;padding: 25px'>
+                                <input type="file" class="cropit-image-input" />
+                            </div>
+                            <div class="cropit-preview">
+                                <div class="cropit-preview-background-container">
+                                    <img class="cropit-preview-background" />
+                                </div>
+                                <div class="cropit-preview-image-container">
+                                    <img class="cropit-preview-image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style='width: 60%; margin:0 auto'>
+                            <div class="image-size-label">
+                                图片缩放
+                            </div>
+                            <input type="range" class="cropit-image-zoom-input"/>
+                        </div>
+                        <div class="row" style='width: 250px;margin: 0 auto'>
+                            <button class="btn btn-primary rotate-ccw"   style='margin: 0 20px 0 0 '>逆时针旋转</button>
+                            <button class="btn btn-primary rotate-cw" >顺时针旋转</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+
+                        </div>
+                        <div class="col-md-2" >
+                            <button class="btn btn-primary export" >确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--管理员登录模态框-->
+<div class="modal fade bs-example-modal-sm" id="myModal2"  tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">管理员登录</h4>
+            </div>
+            <div class="modal-body">
+                <span>账号：</span><span style="display:none;color:red;" id="accountMsg"></span>
+                <input id="account" type="number" class="form-control" placeholder="请输入账号" onblur="checkNumber()">
+                <span>密码：</span><span style="display:none;color:red;" id="passwordMsg"></span>
+                <input id="password" type="password" class="form-control" placeholder="请输入密码" onblur="getPwd()">
+                <button class="btn btn-md btn-primary" style="margin:10px 0 0 90px" onclick='login()'>Sign in</button><br />
+            </div>
+        </div>
+    </div>
+</div>
+<script src="mochenyin/js/subIndex.js"></script>

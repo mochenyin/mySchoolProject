@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>聆听，静谧时</title>
+    <link href="mochenyin/css/index.css" rel="stylesheet" />
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            z-index: 15;
+            width: 60%;
+            padding-left: 0;
+            margin-left: -30%;
+            text-align: center;
+            list-style: none;
+        }
+        .carousel-indicators li{
+            display: inline-block;
+            margin: 1px;
+            text-indent: -999px;
+            cursor: pointer;
+            width: 70px;
+            height: 70px;
+            border:none;
+            border-radius:0;
+            opacity: 0.5;
+        }
+        .carousel-indicators .active{
+            width: 80px;
+            height: 80px;
+            margin: 0;
+            border:2px solid lightgrey;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body id="index">
+<div ui-view>
+
+</div>
+<div style="width:100%;" ng-include='$root.alerturl'></div>
+<script src="mochenyin/dist/jquery.min.js"></script>
+<script src="mochenyin/dist/bootstrap.min.js"></script>
+<script src="mochenyin/dist/angular.js"></script>
+<script src="mochenyin/dist/angular-animate.js"></script>
+<script src="mochenyin/dist/angular-ui-router.js"></script>
+<script src="mochenyin/dist/moxie.js"></script>
+<script src="mochenyin/dist/plupload.dev.js"></script>
+<script src="mochenyin/dist/qiniu.js"></script>
+<script src="mochenyin/dist/jquery.cropit.js"></script>
+<script src="mochenyin/dist/masonry-docs.min.js"></script>
+<script src="mochenyin/dist/socket.io.js"></script>
+<script src="mochenyin/public/md5.js"></script>
+<script src="mochenyin/js/index.js"></script>
+</body>
+</html>

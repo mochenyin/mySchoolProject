@@ -1,0 +1,24 @@
+<!--提示框-->
+<center>
+	<div id="boxshow" class="text-center" style="width:75%;margin-top:5px;height:30px;background:rgba(0,0,0,0.3);position:fixed;top:-50px;left:13%;z-index:1150">
+		<span style="color:white;height:30px;line-height:30px;font-size:13px;">
+			提示：<span id="myTextSpan"></span>
+		</span>
+	</div>
+</center>
+
+
+<script>
+	function boxshow(text) {
+		$('#boxshow').animate({
+			top: 0
+		}, 500, function () {
+			setTimeout(function () {
+				$('#boxshow').animate({
+					top: -50
+				}, 500)
+			}, 1000)
+		})
+		$('#myTextSpan').text(text)
+	};
+</script>

@@ -1,0 +1,70 @@
+
+    <style>
+        .container{
+            width:400px;
+            margin:0 auto;
+            position: relative;
+            top:150px;
+        }
+        .form-signin-heading{
+            margin-bottom: 10px;
+            color:dodgerblue;
+        }
+        .container span{
+            font-size:16px;
+        }
+        .container button{
+            position: relative;
+            left:120px;
+            margin:10px 3px 0 3px;
+        }
+        .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+            margin:5px 0 5px 0;
+        }
+        #checkInput{
+            width:60%;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+            margin:5px 10px 5px 0;
+        }
+        #findPwdBtn{
+            padding: 6px;
+            font-size:14px;
+            margin:5px 0 5px 0;
+        }
+    </style>
+<div class="container">
+<form onsubmit="return false;">
+    <h3 class="form-signin-heading">找回密码</h3>
+    <span>邮箱：</span><span id="numMgs" style="display:none"></span>
+    <input type="email" id="number" ng-blur="checkTelNumber()" class="form-control" placeholder="请输入您的邮箱地址"/>
+    <span>验证码：</span><span id="checkMgs" style="display:none"></span><br />
+    <input type="number" id="checkInput" placeholder="请输入验证码" ng-blur="catchMsg()"/>
+    <input type="button" id="findPwdBtn" value="免费获取验证码" ng-click="setTime()" /><br />
+    <button class="btn btn-primary clickBtn" style="margin: 5px 0 5px 100px" ng-click="clickToBlock()">确定</button>
+    <span id="updataPwd" style="color:dodgerblue;float:right;cursor:pointer;margin:12px 0 0 0;display:none;" ng-click="findPwd()">设置密码</span>
+</form>
+</div>
+<div class="container" id="findPwdDiv" style="display:none;">
+    <form onsubmit="return false;">
+        <h3 class="form-signin-heading">设置密码</h3>
+        <span>密码：</span><span id="pwdMgs" style="display:none"></span>
+        <input id="pwd" type="password" ng-blur="getPwd()" class="form-control" placeholder="请输入4-16位密码"/>
+        <span>确认密码：</span><span id="checkPwdMgs" style="display:none"></span>
+        <input type="password" id="checkPwd" ng-blur="checkPwdAgain()" class="form-control" placeholder="请确认密码"/>
+        <button class="btn" ng-click="rewrite()">重置</button>
+        <button class="btn btn-primary"  ng-click="clickToRegister()">保存</button>
+    </form>
+</div>
+<script src="mochenyin/js/findPwd.js"></script>

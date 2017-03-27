@@ -1,0 +1,91 @@
+<style>
+	* {
+		font-family: "微软雅黑";
+	}
+
+	.drawer-li {
+		margin-top: 20px;
+		background-color: rgba(255, 255, 255, 0.1);
+		height: 40px;
+		border: none;
+		color: white;
+	}
+
+	.drawer-li a {
+		color: white;
+	}
+
+	.gongneng {
+		font-size: 15px;
+		font-family: "微软雅黑";
+	}
+</style>
+
+<div id="drawer" class="col-xs-12 height" style="padding: 0;position: fixed;top:0;bottom:0;background: rgba(33,33,33,0.7);z-index: 1089;display: none"></div>
+<div ng-controller='myc' id="drawer1" class="col-xs-9 height" style="background:#279DA9;z-index: 1090;left: -80%;position: fixed;top:0;bottom:0;">
+	<nav class="row" style="margin-top:10px;">
+		<div style="text-align:center;">
+		<img id='img' src="http://www.geminno.cn/files/user/2016/08-31/1624204a2c9d448977.GIF" alt="" height="110px" style="border-radius: 50%;">
+		</div>
+		<h4 ng-bind="userinfo.nick" style="text-align:center;color:white;height:32px;line-height:32px;"></h4>
+	</nav>
+	<a href="http://m.xmgc360.com/homework/web/">
+		<div class="panel panel-default drawer-li">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-home" style="color:#6b6bff;"></span><span class="gongneng">&nbsp;&nbsp;作业首页</span>
+			</div>
+		</div>
+	</a>
+	<a href="__CWorkRes.html">
+		<div class="panel panel-default drawer-li">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-th-list" style="color:#6bc0ff;"></span><span class="gongneng">&nbsp;&nbsp;作业库</span>
+			</div>
+		</div>
+	</a>
+	<a href="SMyWork.html">
+		<div class="panel panel-default drawer-li stu">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-tag" style="color:#6bffbb;"></span><span class="gongneng">&nbsp;&nbsp;未提交</span>
+			</div>
+		</div>
+	</a>
+	<a href="TAddWork.html">
+		<div class="panel panel-default drawer-li tea">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-cloud-upload" style="color:#ff6b6b;"></span><span class="gongneng">&nbsp;&nbsp;发布作业</span>
+			</div>
+		</div>
+	</a>
+	<a href="TMyWork.html">
+		<div class="panel panel-default drawer-li tea">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-file" style="color:#ffdd6b;"></span><span class="gongneng">&nbsp;&nbsp;已发布</span>
+			</div>
+		</div>
+	</a>
+	<a href="SMyWork.html">
+		<div class="panel panel-default drawer-li stu">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-book" style="color:#ff6bb5;"></span><span class="gongneng">&nbsp;&nbsp;我的作业</span>
+			</div>
+		</div>
+	</a>
+	<a href="CNoteList.html">
+		<div class="panel panel-default drawer-li">
+			<div class="panel-body">
+				<span class="glyphicon glyphicon-bullhorn" style="color:#ff6b6b;"></span><span class="gongneng">&nbsp;&nbsp;公告</span>
+			</div>
+		</div>
+	</a>
+	<a href="http://m.xmgc360.com/">
+		<div class="panel panel-default drawer-li">
+			<div class="panel-body">
+
+				<span class="glyphicon glyphicon-home" style="color:#ff6b6b;"></span><span class="gongneng">&nbsp;&nbsp;返回首页</span>
+
+			</div>
+		</div>
+	</a>
+</div>
+<script src="/homework/web/teacherPage/controller/_nav.js"></script>

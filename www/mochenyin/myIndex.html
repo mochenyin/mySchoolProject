@@ -1,0 +1,34 @@
+<div  ng-controller="indexBodyController">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" style="background:url({{activeImg[0].imgKey}});background-size:100% 100%;" class="active">
+            </li>
+            <li data-target="#carousel-example-generic" style="background:url({{activeImg[1].imgKey}});background-size:100% 100%;" data-slide-to="1">
+            </li>
+            <li data-target="#carousel-example-generic" style="background:url({{activeImg[2].imgKey}});background-size:100% 100%;" data-slide-to="2">
+            </li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img ng-src={{activeImg[0].imgKey}}  alt="nightline">
+            </div>
+            <div class="item">
+                <img ng-src={{activeImg[1].imgKey}}  alt="greenandboy">
+            </div>
+            <div class="item">
+                <img ng-src={{activeImg[2].imgKey}}  alt="girl">
+            </div>
+        </div>
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </a>
+    </div>
+</div>
+<script src="mochenyin/js/myIndex.js"></script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="css/managerPage.css" />
+    <link rel="stylesheet" href="dist/animate.min.css" />
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body ng-controller="managerController">
+<div class="header">
+
+</div>
+<div class="body">
+<div id="bodyLeft">
+<ul id="clickUl">
+    <li onclick="window.location='/'">返回首页</li>
+    <li><a href="#/baseMsg" class="clicked">项目基本信息</a></li>
+    <li><a href="#/changeImgMngr">轮播图管理</a></li>
+    <li><a href="#/userMnger">用户管理</a></li>
+    <li><a href="#/imgMngr">图片管理</a></li>
+    <li><a href="#/chatMngr">聊天管理</a></li>
+</ul>
+</div>
+<div id="bodyRight">
+    <div id="bodyRight-header"></div>
+     <div id="bodyRight-main" ng-view></div>
+</div>
+</div>
+<div class="footer">
+
+</div>
+<div style="width:100%;" ng-include='$root.alerturl'></div>
+<script src="dist/jquery.min.js"></script>
+<script src="dist/bootstrap.min.js"></script>
+<script src="dist/angular.js"></script>
+<script src="dist/angular-route.js"></script>
+<script src="dist/qiniu.js"></script>
+<script src="dist/moxie.js"></script>
+<script src="dist/plupload.dev.js"></script>
+<script src="js/managerPage.js"></script>
+</body>
+</html>

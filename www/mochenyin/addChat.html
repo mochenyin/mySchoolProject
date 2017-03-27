@@ -1,0 +1,32 @@
+<div  id="addChat">
+    <form class="form-chat" role="form" onsubmit="return false;">
+        <p>
+            <span>房间名：</span>
+            <input  type="text" id="roomName" style="width:45%;" class="form-control" />
+        </p>
+        <p>
+            <span>标题：</span><span style="display:none;color:red;" id="titleMsg"></span>
+            <input id="titleChat" type="text" style="width:45%;" class="form-control" placeholder="请输入标题" ng-blur="checkTitle($event)">
+        </p>
+        <p>
+            <span>描述：</span><span style="display:none;color:red;" id="textareaMsg"></span>
+                            <textarea id="textareaChat" name="textarea"   rows="7" class="form-control" style="width:45%;resize: vertical" ng-blur="checkWords()">
+                            </textarea>
+        </p>
+        <p><span>标签分类：</span>
+            <select class="form-control" style="width:20%;" id="selectStyle">
+                <option ng-repeat="k in chatStyle" value={{k.chatId}}>{{k.chatName}}</option>
+            </select>
+        </p>
+        <p id="btn-uploader2">
+            <span>封面：</span>
+            <button id="pickfiles2" class="btn btn-primary">添加封面</button>
+        </p>
+        <p id="chatImg"></p>
+    </form>
+    <div id="btnDiv">
+        <button type="button" class="btn btn-default" ng-click="cancelClick()">取消</button>
+        <button type="button" class="btn btn-primary"  ng-click="okClick()">确定</button>
+    </div>
+</div>
+<script src="mochenyin/js/addChat.js"></script>

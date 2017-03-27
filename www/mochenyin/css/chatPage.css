@@ -1,0 +1,107 @@
+#myChatDiv{
+    width:100%;
+    min-height:840px;
+    display:flex;
+    flex-flow:row;
+}
+#leftDiv{
+    flex:1;
+}
+#rightDiv{
+    flex:5;
+    background: #ECECE9;
+}
+#leftDiv p{
+    width:100%;
+    height:40px;
+    line-height:40px;
+    text-align:center;
+}
+#leftDiv ul{
+    list-style:none;
+    width:100%;
+}
+.chatLi a{
+    display: inline-block;
+    width:100%;
+    height:60px;
+    line-height:60px;
+    text-align:center;
+    text-decoration: none;
+}
+.chatLi a:hover{
+    background: #DDDDDD;
+    text-decoration: none;
+}
+.chatLi a.checked{
+    background: #9E9E9E;
+    color:white;
+}
+#addChat{
+    padding:0 0 0 240px;
+}
+#btnDiv{
+    width:60%;
+    margin:20px 0 0 220px;
+}
+#chatList{
+    width:100%;
+    position: relative;
+}
+.chatListDiv{
+    width:100%;
+    height:40px;
+    display:flex;
+    flex-flow:row;
+    line-height: 40px;
+    color:gray;
+}
+.chatListP1{
+    font-size:20px;
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    color:black;
+    margin:10px 0;
+}
+.chatListP2{
+    height:32px;
+    line-height:16px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    color:black;
+}
+.chatListDivP1{
+    flex:5;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.chatListDivP2{
+    flex:2;
+    text-align: right;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.chatListRepeat{
+    width:237px;
+    margin:20px 0 0 15px;
+    background: #FFFFFF;
+    box-shadow:1px 1px 1px 1px #9E9E9E ;
+    float:left;
+    cursor:pointer;
+    display:inline-block;
+    text-decoration: none;
+}
+.chatListRepeat:hover{
+    text-decoration: none;
+}
+.chatListImg{
+    max-width: 100%!important;
+    height: auto!important;
+}

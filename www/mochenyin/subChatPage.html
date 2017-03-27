@@ -1,0 +1,239 @@
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        #publish { background:#E0E0E0; padding: 8px 20px;height:60px; width: 100%; }
+        #sendMsg { border-radius:10px; padding: 10px; width: 75%;margin-right:15px;float:left; }
+        #messages {
+            width:100%;
+            list-style-type: none;
+            margin: 10px 0 20px 0;
+            padding: 0;
+        }
+        #myDiv{
+            width:100%;
+            height:830px;
+            position:relative;
+        }
+        #myDivBGM{
+            width:100%;
+            height:780px;
+            background: url(mochenyin/images/flower3.png);
+            background-size: 100% 100%;
+            opacity: .5;
+            position: absolute;
+            top:50px;
+            z-index:1;
+        }
+        #myDivContent{
+            width:100%;
+            height:830px;
+            overflow: auto;
+            position: absolute;
+            top:0;
+            z-index:2;
+        }
+        #onlineUser{
+            list-style:none;
+            padding:0;
+            width:100%;
+            height:860px;
+            overflow: auto;
+        }
+        #onlineUser li{
+            width:100%;
+            height:60px;
+            line-height: 60px;
+            color:#0086b3;
+            margin:0;
+            border-bottom: 1px dashed lightgrey;
+        }
+        .myImg{
+            width:40px !important;
+            height:40px !important;
+            vertical-align: middle;
+            border-radius: 50%;
+            margin: 0 10px 0 15px;
+        }
+        .myMessage{
+            max-width: 400px;
+            min-width:60px;
+            min-height: 40px;
+            border-radius:10px;
+            margin:10px 40px 20px 40px;
+            padding:10px;
+            opacity: 0.7;
+            color:white;
+            display:inline-block;
+        }
+        .systemsMsg{
+            width:100%;
+            height:40px;
+            line-height: 40px;
+            text-align: center;
+        }
+        #main{
+            width:100%;
+            min-height: 960px;
+            display:flex;
+            flex-flow:row;
+        }
+        #leftOne{
+            width:280px;
+            /*border:1px solid lightseagreen;*/
+            padding:20px 0 0 10px;
+        }
+        #leftTwo{
+            flex:1;
+            /*border:1px solid greenyellow;*/
+            height:960px;
+            position:relative;
+        }
+        #leftTwoBGM{
+            width:100%;
+            height:960px;
+            background: url('mochenyin/images/flower2.png');
+            background-size:100% 100%;
+            opacity: 0.5;
+            position: absolute;
+            top:0;
+            z-index:1;
+        }
+        #leftTwoContent{
+            width:100%;
+            height:960px;
+            overflow: auto;
+            position: absolute;
+            top:0;
+            z-index: 2;
+        }
+        #right{
+            flex:4;
+            /*border:1px solid darkseagreen;*/
+            position: relative;
+        }
+        #roomName{
+            width:100%;
+            height:60px;
+            background:#FAECF1;
+            text-align:center;
+            line-height: 60px;
+            font-size:25px;
+        }
+        #fontStyle{
+            min-width:120px;
+            position: absolute;
+            top:20px;
+            left:60px;
+            z-index:10;
+            list-style:none;
+            background:#EEEEEE ;
+            border-radius: 5px;
+            box-shadow: 5px 5px 3px #888888;
+        }
+        #fontStyle li{
+            width:100%;
+            height:35px;
+            line-height: 35px;
+            text-align: center;
+            cursor:pointer;
+        }
+        #myRoomImg{
+            width:260px;
+            height:180px !important;
+        }
+        #myP1{
+            text-align: center;
+            font-size: 22px;
+        }
+        .allP{
+            width:100%;
+            height: 30px;
+            line-height: 30px;
+            font-weight: bold;
+        }
+        #myP2{
+            font-size: 16px;
+        }
+        .myMsgLiOther{
+            display:flex;
+            flex-flow:row;
+            clear:both;
+        }
+        .myMsgLiMine{
+            clear:both;
+        }
+        .myMsgLiOther .msgDivOther{
+            flex:1;
+            margin:10px 0 10px 20px;
+        }
+        .myMsgLiMine .msgDivOther{
+            width:15%;
+            margin:10px 20px 10px 0;
+            float:right
+        }
+        .myMsgLiMine .myMessage{
+            float:right;
+        }
+        .myMsgLiOther .msgDiv2Other{
+           flex:6;
+           margin:20px 0 0 0;
+        }
+        .myMsgLiMine .msgDiv2Other{
+            width:75%;
+            float:right;
+            margin:20px 20px 0 0;
+        }
+    </style>
+<div id="body" style={{fontFamily}}>
+   <div id="main" ng-click="cancelFlag()">
+       <div  id="leftOne">
+        <p id="myP1" class="allP">{{currentRoom}}</p>
+           <p id="myP2" class="allP">{{currentRoomTitle}}</p>
+           <img id="myRoomImg" ng-src={{currentRoomImg}} />
+           <p>{{currentRoomDes}}</p>
+       </div>
+       <div  id="leftTwo">
+          <div id="leftTwoBGM"></div>
+           <div id="leftTwoContent">
+               <h4 id="onlineUserCount">在线人数:{{userList.length}}</h4>
+               <h4 id="onlineUserlist">在线列表:</h4>
+               <ul id="onlineUser">
+                   <li ng-repeat="(key,val) in userList">
+                       <img class="myImg" ng-src={{val.userImg}} />
+                       {{val.userName}}
+                   </li>
+               </ul>
+           </div>
+       </div>
+      <div  id="right" style={{fontSize}}>
+          <div id="roomName">
+              <span ng-click="toggleFlag($event)" class="glyphicon glyphicon-align-justify pull-left" style="margin:15px 0 0 20px;"></span>
+              <span ng-click="toggleAdd()" class="glyphicon glyphicon-zoom-in pull-left" style="margin:15px 0 0 20px;"></span>
+              <span ng-click="toggleDecrese()" class="glyphicon glyphicon-zoom-out pull-left" style="margin:15px 0 0 20px;"></span>
+              当前房间：{{currentRoom}}(ID:{{currentRoomId}})</div>
+             <ul id="fontStyle" ng-show="flag" ng-click="changeFontStyle($event)">
+                 <li ng-repeat="k in fontStyle" data-fontStyle={{k}}>{{k}}</li>
+             </ul>
+          <div id="myDiv">
+             <div id="myDivBGM"></div>
+              <div id="myDivContent">
+                  <ul id="messages">
+                     <li ng-repeat='(k,val) in myMsgTypeList' class={{val.addCls}}>
+                         <div class="msgDivOther">
+                         <p><span style="color:lightseagreen">{{val.userName}}</span> {{val.addTime}}</p>
+                         <p><img class="myImg" ng-src='http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}' /></p>
+                         </div>
+                         <div class="msgDiv2Other"><p class="myMessage" style="background:{{val.bkColor}}">{{val.chatMsg}}</p></div>
+                     </li>
+                  </ul>
+              </div>
+          </div>
+          <div id="publish">
+              <input id="sendMsg" autocomplete="off" />
+              <button  class="btn btn-success send" style="float:left;margin:5px 0 0 0;">发送</button>
+          </div>
+      </div>
+   </div>
+</div>
+<script src="mochenyin/dist/socket.io.js"></script>
+<script src="mochenyin/js/subChatPage.js"></script>
