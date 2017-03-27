@@ -1,0 +1,40 @@
+{
+  "name": "nodeapp",
+  "version": "0.0.1",
+  "description": "nodeapp",
+  "main": "_app.js",
+  "private": true,
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "jscodepie"
+  ],
+  "author": "zhyuzh",
+  "license": "ISC",
+  "dependencies": {
+    "co": "^4.6.0",
+    "co-mysql": "^1.0.0",
+    "compress": "^0.99.0",
+    "cookie": "^0.2.4",
+    "crypto": "0.0.3",
+    "ejs": "^2.5.2",
+    "fs": "0.0.1-security",
+    "install": "^0.8.1",
+    "koa": "^1.1.2",
+    "koa-bodyparser": "^2.2.0",
+    "koa-file-server": "^2.3.1",
+    "koa-gzip": "^0.1.0",
+    "koa-router": "^5.4.0",
+    "koa-static": "^2.0.0",
+    "mysql": "^2.11.1",
+    "node-uuid": "^1.4.7",
+    "nodemailer": "^2.3.2",
+    "nodemailer-smtp-transport": "^2.4.2",
+    "nodemon": "^1.10.2",
+    "npm": "^3.10.6",
+    "qiniu": "^6.1.11",
+    "redis": "^2.4.2",
+    "socket.io": "^1.5.0"
+  }
+}
