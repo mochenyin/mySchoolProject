@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>try Demo</title>
+    <style>
+        .inputWidthMd{
+            width:200px;
+        }
+        .inputWidthSm{
+            width:100px;
+        }
+    </style>
+</head>
+<body>
+<div id="main"></div>
+<script src="dist/jquery.min.js"></script>
+<script>
+    let data=[{
+        label:'姓名：',
+        target:'input',
+        type:'text',
+        selector:'myInput',
+        className:'inputWidthSm',
+        text:'请输入姓名'
+    },{
+        label:'密码',
+        target:'input',
+        type:'password',
+        select:'myInputPwd',
+        className:'inputWidthMd',
+        text:'请输入密码'
+    }
+//        ,{
+//            label:'喜欢的季节:',
+//            target:'select',
+//            selector:'mySelect',
+//            className:'selectStyle',
+//            options:[{key:'spring',value:'春天'},{key:'summer',value:'夏天'},{key:'autorn',value:'秋天'},{key:'winter',value:'冬天'}]
+//        },{
+//            label:'性别',
+//            target:'input',
+//            type:'radio',
+//            selector:'myRadio',
+//            className:'radioStyle',
+//            name:'sex',
+//            options:[{key:'man',value:'男'},{key:'woman',value:'女'}]
+//        }
+    ];
+//    let mainObj=document.getElementById('main');
+//    //data.map(function(item){
+//    console.log('>>>>',createEleMents(data[0]));
+//    mainObj.innerHTML=createEleMents(data[0]);
+//    console.log('mainObj',mainObj);
+    //  }());
+    function createEleMents(target){
+        let oDiv=document.createElement('div');
+        let obj=document.createElement(target.target);
+        let oLabel=document.createElement('label');
+        $(obj).attr('type',target.type);
+        $(obj).attr('class',target.className);
+        $(obj).attr('placeHolder',target.text);
+        $(oLabel).text(target.label);
+        $(oDiv).append($(oLabel));
+        $(oDiv).append($(obj));
+        return $(oDiv);
+    }
+    $('#main').html(createEleMents(data[0]));
+</script>
+</body>
+</html>
