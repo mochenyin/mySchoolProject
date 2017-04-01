@@ -5,6 +5,7 @@ function indexHeaderController($scope){
     if(sessionStorage.isLogin=='loginIn'){
         var myName=sessionStorage.userName==null?sessionStorage.User:sessionStorage.userName;
         var src='http://olcolkmpd.bkt.clouddn.com/'+sessionStorage.userImg;
+        $('#chatH4').html('<a class="indexTab" onclick={window.location="/#/silence/chatPage/memory"}>聊天室</a>');
         $('#userMsg').html('<img id="userImg" data-toggle="modal" data-target="#myModal1" src="'+src+'" width="50px" height="50px"/>' +
             '<span class="glyphicon glyphicon-chevron-down" style="color:white;" data-toggle="dropdown" id="toggleDown"></span>' +
             '  <ul class="dropdown-menu" aria-labelledby="toggleDown"> ' +
@@ -13,6 +14,7 @@ function indexHeaderController($scope){
         $('#toggleStaute').html('<h4>Hi,'+myName+'</h4>');
     }
     else{
+        $('#chatH4').html('<a class="indexTab" onclick={alert("此功能需登录使用,请先登录");window.location="/#/login"}>聊天室</a>');
         $('#userMsg').html('<h4 onclick={window.location="/#/login"}>登录</h4>');
         $('#toggleStaute').html('<h4 onclick={window.location="/#/register"}>注册</h4>')
     }
@@ -144,6 +146,7 @@ function login() {
         $.post('/api/getManagerLogin', dat, function (res) {
             let obj=$('#accountMsg');
             if (res.text == 'ok') {
+                sessionStorage.role=res.data[0].role;
                 window.location.href = 'mochenyin/managerPage.html';
             } else if(res.text == 'false'){
                 obj.css({display:'inline-block'});

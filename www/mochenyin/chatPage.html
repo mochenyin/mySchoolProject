@@ -1,7 +1,7 @@
 <link href="mochenyin/css/chatPage.css" rel="stylesheet" />
 <div id="myChatDiv"  ng-init="wReload()">
     <div id="leftDiv">
-        <p><a ui-sref=".addChat">发起聊天</a></p>
+        <p ng-click="lickick($event)" class="chatLi"><a  class="chatA" ui-sref=".addChat">发起聊天</a></p>
         <p>聊天分类</p>
         <ul ng-click="lickick($event)">
             <li ng-repeat="(k,val) in chatList" class="chatLi"><a class="chatA" ui-sref=".classify({name:'{{val.chatTitle}}'})">{{val.chatName}}</a></li>

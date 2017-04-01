@@ -1,8 +1,11 @@
 /**
+ * Created by SWSD on 2017-03-29.
+ */
+/**
  * Created by SWSD on 2017-03-15.
  */
-function startChatMngrController($scope){
-    $.get('/api/getAllChatMngr',function(res){
+function startRoomMngrController($scope){
+    $.get('/api/getAllRoomMngr',function(res){
         $scope.$apply(function () {
             $scope.filteredNotes = [], $scope.currentPage = 1, $scope.numPerPage =10 , $scope.maxSize = 3;
             $scope.notice = res.data;
@@ -61,14 +64,15 @@ function startChatMngrController($scope){
                 }
             };
         });
-        $scope.delete = function (chatMsgId) {
+
+        $scope.delete = function (roomId) {
             var dat = {
-                chatMsgId: chatMsgId
-            };
+                nid: roomId
+            }
             var a = confirm("您确定要删除吗？");
             if (a) {
                 var a = $scope.filteredNotes.splice($.inArray(this.v, $scope.filteredNotes), 1);
-                $.post("/api/deleteChat", dat, function (res) {
+                $.post("/api/deleteRoom", dat, function (res) {
                     if(res.text=='ok'){
                         alert('删除成功')
                     }

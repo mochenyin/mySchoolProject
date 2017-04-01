@@ -7,7 +7,7 @@
     <hr />
     <div class="imgList row">
         <p class="col-lg-3 col-md-4 col-sm-6" ng-repeat="(key,val) in activeImg">
-            <img ng-src='{{val.imgKey}}' />
+            <img ng-src='http://olcolkmpd.bkt.clouddn.com/{{val.imgKey}}' />
             <button class="btn btn-danger delete" ng-click="delect(val,1)">删除</button>
             <button class="btn btn-primary" ng-click="changeFlag(val,0)">撤下</button>
         </p>
@@ -18,7 +18,7 @@
     <hr />
     <div class="imgList row">
         <p class="col-lg-3 col-md-4 col-sm-6" ng-repeat="(key,val) in unActiveImg">
-            <img ng-src="{{val.imgKey}}" />
+            <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.imgKey}}" />
             <button class="btn btn-danger delete" ng-click="delect(val,0)">删除</button>
             <button class="btn btn-success" ng-click="changeFlag(val,1)">使用</button>
         </p>

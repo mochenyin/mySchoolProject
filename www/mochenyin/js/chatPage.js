@@ -9,7 +9,7 @@ function startIndexChat($scope,$state){
                 $scope.chatList=res.data;
             });
         }
-       $('.chatLi:eq(0) .chatA').addClass('checked');
+       $('.chatLi:eq(1) .chatA').addClass('checked');
     });
     $scope.wReload=function(){
         $state.go("silence.chatPage.classify",{name:'memory'});

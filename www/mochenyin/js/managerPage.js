@@ -33,6 +33,10 @@ var app = angular.module('app', ['ngRoute'])
                 templateUrl: 'chatMngr.html',
                 controller: 'chatMngrController',
             })
+            .when('/roomMngr',{
+                templateUrl: 'roomMngr.html',
+                controller: 'roomMngrController',
+            })
             .otherwise({redirectTo:'/baseMsg'});
     }]);
 
@@ -45,9 +49,18 @@ app.run(function ($rootScope) {
 app.controller('managerController',function($scope){
 
 });
+//用户管理页面控制器
+app.controller('userMngrController',function($scope){
+     startUserMngrController($scope);
+});
+
 //聊天管理页面控制器
 app.controller('chatMngrController',function($scope){
          startChatMngrController($scope);
+});
+//房间管理页面控制器
+app.controller('roomMngrController',function($scope){
+  startRoomMngrController($scope)
 });
 //轮播图页面控制器
 app.controller('changeImgMngrController',function($scope){
@@ -94,7 +107,7 @@ $.get('/api/getChangeImg',data,function(res){
                     let res = eval('(' + info + ')');
                     let sourceLink = 'http://'+domain +'/'+ res.key;//获取上传文件的链接地址
                     let data={
-                        imgUrl:sourceLink,
+                        imgUrl:res.key,
                     };
                     $.post('/api/addChangeImg',data,function(res){
                         if(res.text=='ok'){

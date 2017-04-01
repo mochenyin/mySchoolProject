@@ -217,7 +217,7 @@ _rotr.apis.addChangeImg = function () {
 		var paramtl=[imgUrl,3];
 		var sqlstr = "insert into imgChange(imgKey,addUserId) values(?,?);";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr,paramtl);
-		var sqlstr1='select * from imgChange where imgId=(select last_insert_id());';
+		var sqlstr1='select * from imgChange where imgId=(select last_insert_id());';//查找imgId等于最后插入的数据的ID的数据
 		var rows1 = yield _ctnu([_Mysql.conn, 'query'], sqlstr1);
 		if(rows.affectedRows==1){
 			ctx.body = __newMsg(1, 'ok',rows1);
@@ -369,6 +369,21 @@ _rotr.apis.getRoomMsg = function () {
 _rotr.apis.getAllChatMngr = function () {
 	var ctx = this;
 	var co = $co(function* () {
+		var str = "select r.roomId,chatMsgId,roomName,userName,DATE_FORMAT(addTime,'%Y-%c-%d %T') as addDate,userEmail,roomTitle,chatMsg from room r INNER JOIN (select roomId,userName,addTime,userEmail," +
+			" chatMsg,chatMsgId from chatMsg c INNER JOIN (select userId,userName,userEmail from user) u where u.userId=c.userId) a where r.roomId=a.roomId;";
+		var rows = yield _ctnu([_Mysql.conn, 'query'], str);
+		if (rows){
+			ctx.body = __newMsg(1, 'ok',rows);
+		}
+		return ctx;
+	});
+	return co;
+};
+
+//获取房间管理内容
+_rotr.apis.getAllRoomMngr = function () {
+	var ctx = this;
+	var co = $co(function* () {
 		var str = "select userName,userEmail,roomId,roomTitle,roomDescription,chatName from chatstyle c INNER JOIN (SELECT userName,userEmail," +
 			"roomId,roomTitle,roomDescription,roomStyle FROM user u inner JOIN room r ON u.userId=r.roomUserId) a on c.chatId=a.roomStyle;";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], str);
@@ -380,12 +395,26 @@ _rotr.apis.getAllChatMngr = function () {
 	return co;
 };
 
-//删除聊天
-_rotr.apis.deleteChat = function () {
+//删除房间
+_rotr.apis.deleteRoom = function () {
 	var ctx = this;
 	var co = $co(function* () {
 		var roomId = ctx.query.roomId || ctx.request.body.roomId;
 		var sqlstr = "delete from room where roomId=" + roomId + "";
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		if(rows.affectedRows==1){
+			ctx.body = __newMsg(1, 'ok');
+		}
+		return ctx;
+	});
+	return co;
+};
+//删除聊天
+_rotr.apis.deleteChat = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var chatMsgId = ctx.query.chatMsgId || ctx.request.body.chatMsgId;
+		var sqlstr = "delete from chatMsg where chatMsgId=" + chatMsgId + "";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
 		if(rows.affectedRows==1){
 			ctx.body = __newMsg(1, 'ok');
@@ -419,9 +448,10 @@ _rotr.apis.getAllMsgs = function () {
 	var co = $co(function* () {
 		var roomId = ctx.query.roomId || ctx.request.body.roomId;
 		var paramtc=[roomId];
-		var str = "select userName,userImg,chatMsg,roomId,addTime,u.userId from (select userName,userImg,userId from user) u INNER JOIN " +
-			"(select chatMsg,userId,roomId,addTime from chatMsg where roomId=?) c " +
-			"where u.userId=c.userId ORDER BY addTime;";
+		var str = "select userName,userImg,chatMsg,roomId,add_date,u.userId from (select userName,userImg,userId from user) u INNER JOIN "+
+		"(SELECT chatMsgId,roomId,userId,chatMsg,DATE_FORMAT(addTime, '%T' ) as add_date "+
+		"FROM chatMsg where DATE_FORMAT(addTime,'%Y-%c-%d')=DATE_FORMAT(NOW(), '%Y-%c-%d') and roomId=?) c "+
+		"where u.userId=c.userId ORDER BY add_date;";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], str,paramtc);
 		if(rows){
 			ctx.body = __newMsg(1, 'ok', rows);
@@ -433,70 +463,43 @@ _rotr.apis.getAllMsgs = function () {
 	});
 	return co;
 };
-//作业搜索接口，提交搜索值，模糊搜索字段 作业标题、课程、讨论区，返回搜索到的作业标题、作业id
-_rotr.apis.search = function () {
+//获取用户信息
+_rotr.apis.getUserMngr = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var value = ctx.query.value || ctx.request.body.value;
-		var sqlstr = "SELECT w.wid,w.title,c.`name` from work_info w LEFT JOIN course_info c ON c.cid=w.cid  WHERE w.title LIKE '%" + value + "%' OR c.`name` LIKE '%" + value + "%'";
+		var role = ctx.query.role || ctx.request.body.role;
+		var sqlstr = "select * from user where role ='" + role + " ';";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-
-		var sqlstr1 = "SELECT c.content, c.wid, u.nick FROM chat_info c LEFT JOIN user_info u ON c.userid = u.userid WHERE content LIKE '%" + value + "%'";
-		var rows1 = yield _ctnu([_Mysql.conn, 'query'], sqlstr1);
-
-		var dat = {
-			work: rows,
-			chat: rows1
-		}
-		ctx.body = __newMsg(1, 'ok', dat);
+		ctx.body = __newMsg(1, 'ok',rows);
 		return ctx;
 	});
 	return co;
 };
 
-_rotr.apis.login = function () {
+//删除用户
+_rotr.apis.deleteUser=function(){
+    var ctx=this;
+	var co=$co(function *(){
+		var userId=ctx.query.userId||ctx.request.body.userId;
+		var sqlstr='delete from user where userId="'+userId+'";';
+		var rows=yield _ctnu([_Mysql.conn,'query'],sqlstr);
+		if(rows.affectedRows==1){
+			ctx.body=__newMsg(1,'ok',rows);
+		}
+		return ctx;
+	});
+	return co;
+};
+
+//修改用户角色
+_rotr.apis.changeUserRole = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var id = ctx.query.id || ctx.request.body.id;
-		if (id == '') throw Error('请输入您的id！');
-		var pw = ctx.query.pw || ctx.request.body.pw;
-		if (!pw) throw Error("请输入密码！");
-		var sqlstr = "select * from user_info where userid ='" + id + " ';";
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var role = ctx.query.role || ctx.request.body.role;
+		var sqlstr = "update user set role="+role+" where userId =" + userId + ";";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		//		console.log(">>>>", rows.length, rows[0].password);
-		if (rows.length == 0) throw Error("用户不存在");
-		if (rows[0].password != pw) throw Error("密码错误");
-		if (!(rows[0].role == 3 || rows[0].role == 4)) throw Error('您的权限不够');
-
 		ctx.body = __newMsg(1, 'ok');
-		return ctx;
-	});
-	return co;
-};
-
-//若用户已在项目工场登入，检索此用户是否存在于作业模块的user表中，若无，则加入作业模块的表中,默认为学生
-_rotr.apis.adduser = function () {
-	var ctx = this;
-	var co = $co(function* () {
-		var userid = ctx.query.userid || ctx.request.body.userid;
-		var nick = ctx.query.nick || ctx.request.body.nick;
-		if (nick == '' || nick == null) {
-			nick = '未命名用户';
-		}
-		var sqlstr = "select * from user_info where userid =" + userid + ";";
-		var dat = {};
-		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		if (rows.length == 0) {
-			var date = [userid, nick];
-			var str = "INSERT INTO user_info(userid,nick) VALUES(?,?)";
-			_ctnu([_Mysql.conn, 'query'], str, date)
-		} else {
-			var date = [nick, userid];
-			var str = "UPDATE user_info SET nick=? where userid=?";
-			_ctnu([_Mysql.conn, 'query'], str, date)
-		}
-		dat.user = rows;
-		ctx.body = __newMsg(1, 'ok', dat);
 		return ctx;
 	});
 	return co;

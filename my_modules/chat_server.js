@@ -163,9 +163,15 @@ var _webSocket=$io.on('connection',function(socket){
 });
 
 
+function checkTime(time){
+    if(time<10){
+       time='0'+time;
+    }
+        return time;
+}
 var getTime=function(){
     var date = new Date();
-    return date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+    return checkTime(date.getHours())+":"+checkTime(date.getMinutes())+":"+checkTime(date.getSeconds());
 };
 module.export=_webSocket;/**
  * Created by SWSD on 2017-03-23.

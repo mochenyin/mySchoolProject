@@ -98,8 +98,8 @@ app.controller('indexBodyController',function($scope){
 });
 //聊天室页面控制器
 app.controller('indexChatController',function($scope,$state){
-    $('.indexTab:eq(2)').addClass('indexActive');
-    startIndexChat($scope,$state);
+        $('.indexTab:eq(2)').addClass('indexActive');
+        startIndexChat($scope,$state);
 });
 //新增聊天控制器
 app.controller('addChatController',function($scope){
