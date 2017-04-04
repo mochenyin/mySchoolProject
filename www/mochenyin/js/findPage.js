@@ -1,3 +1,4 @@
-/**
- * Created by SWSD on 2017-03-03.
- */
+function getIndexFindController($scope){
+    $scope.userImg=sessionStorage.userImg;
+    $scope.userName=sessionStorage.userName;
+}

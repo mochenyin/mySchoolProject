@@ -123,6 +123,7 @@ app.controller('chatClassifyController',function($stateParams,$scope){
 //发现页面控制器
 app.controller('indexFindController',function($scope){
     $('.indexTab:eq(1)').addClass('indexActive');
+    getIndexFindController($scope);
 });
 //个人中心控制器
 app.controller('indexPersonalController',function($scope){

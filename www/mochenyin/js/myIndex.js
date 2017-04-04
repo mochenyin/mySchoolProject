@@ -13,4 +13,6 @@ function startIndexBody($scope){
             $scope.activeImg=res.data.active;
         });
     });
+    $scope.userName=sessionStorage.userName;
+    $scope.userImg=sessionStorage.userImg;
 }
