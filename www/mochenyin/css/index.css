@@ -11,7 +11,8 @@
   background:#2B2922 ;
   color: white; }
   #index .header h1 {
-    font-family: shoujin; }
+    font-family: shoujin;
+  margin-bottom: 0 !important;}
   #index .header .tab {
     height: 100px;
     position: relative; }
@@ -29,10 +30,12 @@
 }
 #index .body {
   width: 100%;
-  min-height: 850px; }
+  min-height: 850px;
+}
   #index .body img {
     width: 100%;
-    height: 650px; }
+    height: 550px;
+  }
 #userImg {
   margin: 40px 0 0 0;
 }
@@ -134,4 +137,104 @@ input.cropit-image-zoom-input {
 a.indexActive{
   color:lightseagreen !important;
   text-decoration: none !important;
+}
+#myIndexMain{
+  width:100%;
+  background:#ECECE9;
+}
+#myIndexH2{
+  width:180px;
+  margin:0 auto;
+  color:orangered;
+  padding:20px 0 0 0;
+}
+#myIndexH2 h2{
+  padding:0 !important;
+  margin:0;
+}
+.myIndexTitle{
+   position: relative;
+  top:0;
+  color:white;width:100%;height:200px;
+}
+.myIndexBody{
+  width:1005px;
+  margin:0 auto;
+  background:white;
+}
+.myIndexBody ul{
+  list-style:none;
+}
+.myIndexBody1 li{
+  width:290px;
+  height:180px;
+  display:inline-block;
+  margin:40px 20px 20px 20px;
+  box-shadow:1px 1px #9E9E9E ;
+}
+.myIndexBody1 li a{
+  width:100%;
+  height:100%;
+  display: inline-block;
+  text-align: center;
+  font-size:25px;
+  color:white;
+  text-decoration: none;
+  padding:80px 0 0 0
+}
+.myIndexBody1 li a:hover{
+  text-decoration: none;
+}
+.myIndexBody2{
+  padding:40px 0 0 0;
+}
+.myIndexBody2 li{
+  width:400px;
+  height:200px;
+  margin:0 20px 40px 60px !important;
+  box-shadow:1px 1px 1px 1px #9E9E9E ;
+  display: inline-block;
+}
+.myIndexBody2 li a{
+  width:100%;
+  height:100%;
+  display: inline-block;
+  text-decoration: none;
+}
+.myIndexBody2 li a:hover{
+  text-decoration: none;
+}
+.myIndexBody2Img{
+  border-radius:50%;
+  width:80px !important;
+  height:80px !important;
+  position:relative;
+  top:-20px;
+  box-shadow:1px 1px 1px 1px #9E9E9E ;
+}
+.myIndexBody3 li{
+  width:90%;
+  margin:0 auto;
+}
+.myIndexBody3Ball{
+  color:white;
+  width:80px;
+  height:80px;
+  position:relative;
+  top:30px;
+  font-size:25px;
+  text-align: center;
+  line-height: 80px;
+  font-weight:bold;
+  border-radius: 50%;
+  font-family: shoujin;
+}
+.myIndexBody3Quare{
+  display:flex;
+  flex-flow:row;
+  width:700px;
+  line-height:80px;
+  height:80px;
+  margin:0 auto;
+  box-shadow:1px 1px 1px 1px #9E9E9E ;
 }
