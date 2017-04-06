@@ -34,6 +34,16 @@ app.config(function($stateProvider, $urlRouterProvider) {
                templateUrl: 'mochenyin/myIndex.html',
                controller: 'indexBodyController',
            })
+        .state('silence.indexClassify',{
+            url:'/indexClassify',
+            templateUrl: 'mochenyin/indexClassify.html',
+            controller: 'indexBodyClassifyController',
+        })
+        .state('silence.userCard',{
+            url:'/userCard',
+            templateUrl:'mochenyin/userCard.html',
+            controller:'userCardController'
+        })
            .state('silence.findPage',{
                url:'/findPage',
                templateUrl: 'mochenyin/findPage.html',
@@ -61,7 +71,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                     templateUrl: 'mochenyin/subChatPage.html',
                     controller: 'subChatController',
                 }
-            },
+            }
         })
            .state('silence.personalPage',{
                url:'/personalPage',
@@ -96,6 +106,16 @@ app.controller('indexBodyController',function($scope){
     $('.indexTab:eq(0)').addClass('indexActive');
     startIndexBody($scope);
 });
+//首页子分类控制器
+app.controller('indexBodyClassifyController',function($scope){
+    $('.indexTab:eq(0)').addClass('indexActive');
+    startIndexBodyClassify($scope);
+});
+//用户卡片页面控制器
+app.controller('userCardController',function($scope){
+   startUserCard($scope);
+});
+
 //聊天室页面控制器
 app.controller('indexChatController',function($scope,$state){
         $('.indexTab:eq(2)').addClass('indexActive');
@@ -129,5 +149,6 @@ app.controller('indexFindController',function($scope){
 app.controller('indexPersonalController',function($scope){
     $('.indexTab:eq(3)').addClass('indexActive');
 });
+
 
 

@@ -10,62 +10,133 @@
         .inputWidthSm{
             width:100px;
         }
+        .rows{
+            width:120px;
+            padding: 0 20px;
+            height:40px;
+            line-height:40px ;
+            text-align: justify;
+            border:1px solid lightseagreen;
+            text-align-last:justify
+        }
     </style>
 </head>
 <body>
 <div id="main"></div>
+<div>
+    <div class="rows">一二</div>
+    <div class="rows">一二三</div>
+    <div class="rows">一二三四</div>
+    <div class="rows">一四</div>
+    <div class="rows">一二三四</div>
+    <div class="rows">一二四</div>
+</div>
 <script src="dist/jquery.min.js"></script>
 <script>
     let data=[{
-        label:'姓名：',
+        label:'姓名:',
         target:'input',
         type:'text',
         selector:'myInput',
         className:'inputWidthSm',
         text:'请输入姓名'
     },{
-        label:'密码',
+        label:'密码:',
         target:'input',
         type:'password',
         select:'myInputPwd',
         className:'inputWidthMd',
         text:'请输入密码'
     }
-//        ,{
-//            label:'喜欢的季节:',
-//            target:'select',
-//            selector:'mySelect',
-//            className:'selectStyle',
-//            options:[{key:'spring',value:'春天'},{key:'summer',value:'夏天'},{key:'autorn',value:'秋天'},{key:'winter',value:'冬天'}]
-//        },{
-//            label:'性别',
-//            target:'input',
-//            type:'radio',
-//            selector:'myRadio',
-//            className:'radioStyle',
-//            name:'sex',
-//            options:[{key:'man',value:'男'},{key:'woman',value:'女'}]
-//        }
+        ,{
+            label:'喜欢的季节:',
+            target:'select',
+            selector:'mySelect',
+            className:'selectStyle',
+            options:[{key:'spring',value:'春天'},{key:'summer',value:'夏天'},{key:'autorn',value:'秋天'},{key:'winter',value:'冬天'}]
+        },{
+            label:'性别:',
+            target:'input',
+            type:'radio',
+            selector:'myRadio',
+            className:'radioStyle',
+            name:'sex',
+            options:[{key:'man',value:'男'},{key:'woman',value:'女'}]
+        }
     ];
-//    let mainObj=document.getElementById('main');
-//    //data.map(function(item){
-//    console.log('>>>>',createEleMents(data[0]));
-//    mainObj.innerHTML=createEleMents(data[0]);
-//    console.log('mainObj',mainObj);
-    //  }());
-    function createEleMents(target){
-        let oDiv=document.createElement('div');
-        let obj=document.createElement(target.target);
-        let oLabel=document.createElement('label');
-        $(obj).attr('type',target.type);
-        $(obj).attr('class',target.className);
-        $(obj).attr('placeHolder',target.text);
-        $(oLabel).text(target.label);
+    function createElement(target){
+        var oTag;
+        var html='';
+        var oDiv=document.createElement('div');
+        $(oDiv).css({margin:'20px 0'});
+        var oLabel=document.createElement(target.label);
+        if(target.target=='input'){
+            if(target.type=='text'||target.type=='password'){
+                $(oLabel).text(target.label);
+                 oTag=document.createElement(target.target);
+                $(oTag).attr('type',target.type);
+                $(oTag).attr('class',target.className);
+                $(oTag).attr('placeHolder',target.text);
+            }
+            else if(target.type=='radio'){
+                $(oLabel).text(target.label);
+                oTag=document.createElement('span');
+                for(var i=0;i<target.options.length;i++){
+                   var checked =i==0?'checked':'';
+                    html+='<input type="'+target.type+'" '+checked+' class="'+target.className+'" name="'+target.name+'" value="'+target.options[i].key+'" />'+target.options[i].value+'';
+                }
+                $(oTag).html(html)
+            }
+        }
+        else{
+            $(oLabel).text(target.label);
+             oTag=document.createElement(target.target);
+            for(var j=0;j<target.options.length;j++){
+                html+='<option value="'+target.options[j].key+'">'+target.options[j].value+'</option>'
+            }
+            $(oTag).html(html);
+        }
         $(oDiv).append($(oLabel));
-        $(oDiv).append($(obj));
-        return $(oDiv);
+        $(oDiv).append($(oTag));
+        return $(oDiv)
     }
-    $('#main').html(createEleMents(data[0]));
+    //js数组循环方法中，优化后的for循环是效率最高的，map性能比foreach弱，for in 效率最低；
+
+    //1.
+//    data.forEach(function(item){
+//       return $('#main').append(createElement(item));
+//      });
+    //2.
+//    data.map(function(item){
+//        return $('#main').append(createElement(item));
+//    });
+    //3.
+//   for(var k=0;k<data.length;k++){
+//       $('#main').append(createElement(data[k]));
+//   }
+    //4. 优化后的for循环
+    var t,len;
+    for(t=0,len=data.length;t<len;t++){
+        $('#main').append(createElement(data[t]))
+    }
+
+    var args=Array.prototype.map;
+   let newArgs= args.call('hello world !',function(item){
+        return item.charCodeAt(0);//返回ASCLL编码
+    });
+    console.log('>>>>>>',newArgs);
+
+//    let elems=document.querySelectorAll('input');
+    let elems=$('#main').find('input');
+    let newElems=Array.prototype.map.call(elems,function(item){//借用array的map方法，再用call方法跟换上下文指向来遍历符合要求的节点
+        return $(item).attr('type')
+    });
+//    let elems=document.querySelectorAll('input');
+//    let newElems=elems.map(function(item){
+//        return $(item).attr('type')
+//    })
+    console.log('++++++',newElems);
+
 </script>
 </body>
 </html>

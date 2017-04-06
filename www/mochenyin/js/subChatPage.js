@@ -105,30 +105,18 @@ function subChatController($scope,roomId){
         var num=Math.floor(Math.random()*oArray.length);
         var color=oArray[num];
         if(json.type=='others'){
-            let dat={
-                bkColor:color,
-                userName:json.userMsg.userName,
-                userImg:json.userMsg.userImg,
-                add_date:json.time,
-                chatMsg:json.chatMessage,
-                addCls:'myMsgLiOther'
-            };
-            $scope.$apply(function(){
-                $scope.myMsgTypeList.push(dat);
-            });
+            $('#messages').append($('<li class="myMsgLiOther">').html(' <div class="msgDivOther"> ' +
+                '<p><span style="color:lightseagreen">'+json.userMsg.userName+'</span>'+json.time+'</p> ' +
+                '<p><img class="myImg" src="http://olcolkmpd.bkt.clouddn.com/'+json.userMsg.userImg+'" /></p> ' +
+                '</div> ' +
+                '<div class="msgDiv2Other"><p class="myMessage" style="background:'+color+'">'+json.chatMessage+'</p></div>'));
         }
         else{
-            let dat={
-                bkColor:color,
-                userName:json.userMsg.userName,
-                userImg:json.userMsg.userImg,
-                add_date:json.time,
-                chatMsg:json.chatMessage,
-                addCls:'myMsgLiMine'
-            };
-           $scope.$apply(function(){
-               $scope.myMsgTypeList.push(dat);
-            });
+            $('#messages').append($('<li class="myMsgLiMine">').html(' <div class="msgDivOther"> ' +
+                '<p><span style="color:lightseagreen">'+json.userMsg.userName+'</span>'+json.time+'</p> ' +
+                '<p><img class="myImg" src="http://olcolkmpd.bkt.clouddn.com/'+json.userMsg.userImg+'" /></p> ' +
+                '</div> ' +
+                '<div class="msgDiv2Other"><p class="myMessage" style="background:'+color+'">'+json.chatMessage+'</p></div>'));
         }
         $('#myDivContent').scrollTop($('#messages').height());
     });
