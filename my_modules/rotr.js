@@ -506,15 +506,16 @@ _rotr.apis.changeUserRole = function () {
 };
 
 
-//获取所有的课程，返回课程名
-_rotr.apis.kecheng = function () {
+//获取分类封面
+_rotr.apis.getCover = function () {
 	var ctx = this;
 	var co = $co(function* () {
-
-		var sqlstr = "select * from course_info;";
+		var classifyId=ctx.query.id||ctx.request.body.id;
+		var sqlstr = "select * from classify where classifyId="+classifyId+";";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		console.log(">>>>", rows);
-		ctx.body = rows;
+	if(rows){
+		ctx.body = __newMsg(1, 'ok',rows);
+	}
 		return ctx;
 	});
 	return co;

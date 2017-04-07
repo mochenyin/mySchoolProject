@@ -35,7 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
                controller: 'indexBodyController',
            })
         .state('silence.indexClassify',{
-            url:'/indexClassify',
+            url:'/indexClassify/:id',
             templateUrl: 'mochenyin/indexClassify.html',
             controller: 'indexBodyClassifyController',
         })
@@ -107,9 +107,9 @@ app.controller('indexBodyController',function($scope){
     startIndexBody($scope);
 });
 //首页子分类控制器
-app.controller('indexBodyClassifyController',function($scope){
+app.controller('indexBodyClassifyController',function($stateParams,$scope){
     $('.indexTab:eq(0)').addClass('indexActive');
-    startIndexBodyClassify($scope);
+    startIndexBodyClassify($stateParams.id,$scope);
 });
 //用户卡片页面控制器
 app.controller('userCardController',function($scope){
