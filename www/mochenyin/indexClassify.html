@@ -5,10 +5,22 @@
     <div style="width:100%;height:250px;position:absolute;top:100px;z-index:2;background: -webkit-gradient(linear,0% 0%,40% 0%,from({{coverData.classifyColor1}}),to({{coverData.classifyColor2}}))">
            <h1 style="font-family: shoujin;text-align:center;color:white;">{{coverData.classifyText}}</h1>
     </div>
-    <div style="width:100%;height:200px;background:white;"></div>
+    <div style="width:100%;height:200px;background:white;position:relative;">
+        <div ng-repeat=" (k,val) in classify" style="width:{{width}};height:200px;padding-top:25px;float:left;">
+           <div class="indexClassify_op" style="background:url(http://olcolkmpd.bkt.clouddn.com/{{val.classifyImg}});">
+
+           </div>
+            <div class="indexClassify_bg" style="background:{{val.bgColor}};">
+             {{val.classifyText}}
+            </div>
+        </div>
+        <div class="wow bounceInDown" id="addTag" data-toggle="modal" data-target=".addWords">
+            我要投稿
+        </div>
+    </div>
     <div style="width:1005px;margin:0 auto;height:400px;background:white;">
         <ul style="padding:40px 0 0 0;list-style:none;">
-            <li style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ; ">
+            <li style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
                 <a href="#" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
                     <div style="width:100px;text-align: center">
                         <p>{{userName}}</p>
@@ -45,4 +57,39 @@
         </ul>
     </div>
 </div>
+
+<div class="modal fade addWords" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="min-height:400px;padding:10px 20px;position: relative;">
+            <span>标题：</span>
+            <input type="text" class="form-control" placeholder="title" />
+            <span>分类：</span>
+            <select class="form-control" style="width:200px;">
+                <option value="0"> 默认</option>
+                <option value="1">诗</option>
+                <option value="2">词</option>
+                <option value="3">曲</option>
+            </select>
+            <span>描述：</span>
+            <input type="text" class="form-control" placeholder="describe" />
+            <span>正文：</span>
+            <textarea  class="form-control" placeholder="content"></textarea>
+        <div  id="btn-uploader2" style="margin:10px 0;">
+              <button class="btn btn-primary" id="addMutple">添加图片</button>
+        </div>
+        <div id="muti_img">
+
+        </div>
+            <div style="width:50%;position: absolute;bottom:20px;right:40px;">
+                <button class="btn btn-primary pull-right" style="margin-left:20px;">确定</button>
+                <button class="btn btn-default pull-right">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+        new WOW().init();
+    };
+</script>
 <script src="mochenyin/js/indexClassify.js"></script>

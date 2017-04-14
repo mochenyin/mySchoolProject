@@ -512,9 +512,11 @@ _rotr.apis.getCover = function () {
 	var co = $co(function* () {
 		var classifyId=ctx.query.id||ctx.request.body.id;
 		var sqlstr = "select * from classify where classifyId="+classifyId+";";
+		var sqlstr2 = "select * from classify where isClassifyIndex="+classifyId+";";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		var rows2 = yield _ctnu([_Mysql.conn, 'query'], sqlstr2);
 	if(rows){
-		ctx.body = __newMsg(1, 'ok',rows);
+		ctx.body = __newMsg(1, 'ok',{rows:rows,rows2:rows2});
 	}
 		return ctx;
 	});

@@ -148,6 +148,7 @@ app.controller('indexFindController',function($scope){
 //个人中心控制器
 app.controller('indexPersonalController',function($scope){
     $('.indexTab:eq(3)').addClass('indexActive');
+    getPersonalPageController($scope)
 });
 
 
