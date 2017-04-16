@@ -2,12 +2,9 @@
  * Created by SWSD on 2017-04-06.
  */
 function startIndexBodyClassify(id,$scope){
-    $scope.userImg=sessionStorage.userImg;
-    $scope.userName=sessionStorage.userName;
     var nArray=['#252b5b','#380E52','#380C0F','#007F5A','#057497','#294739','#2092E3','14263A','grey','#000080','#4B3E0B'];
    $.get('/api/getCover',{id:id},function(res){
                if(res.text=='ok'){
-                   console.log(res.data);
                  $scope.$apply(function(){
                      $scope.coverData=res.data.rows[0];
                      $scope.classify=res.data.rows2;
@@ -19,6 +16,94 @@ function startIndexBodyClassify(id,$scope){
                  });
                }
    });
+    var index=0;
+    let isTheme=true;
+    $.post('/api/getThemeMsg',{id:id,index:index},function(res){
+       if(res.text=='ok'){
+           let resQ=res.data;
+           for(var key in resQ){
+               if(resQ[key].themeImages){
+                   let length=resQ[key].themeImages.length;
+                   let str=resQ[key].themeImages.substring(0,length-1);
+                   resQ[key].themeImages=str.split(';');
+               }
+           }
+           $scope.themeArray=resQ;
+       }
+        else{
+           $('#singleTheme').html('<h3 style="width:100%;text-align: center;margin:20px 0;">暂无内容</h3>');
+           isTheme=false;
+       }
+    });
+    $scope.addTheme=function(){
+        if(sessionStorage.Key){
+            $('.addWords').modal('show');
+        }
+        else{
+            $scope.text='请先登录';
+            boxshow($scope.text);
+        }
+    };
+    $scope.isClassifyed=function(classifyId){
+      if(isTheme){
+          $.get('/api/getClassify',{classifyId:classifyId},function(res){
+              if(res.text=='ok'){
+                  let resQ=res.data;
+                  for(var key in resQ){
+                      if(resQ[key].themeImages){
+                          let length=resQ[key].themeImages.length;
+                          let str=resQ[key].themeImages.substring(0,length-1);
+                          resQ[key].themeImages=str.split(';');
+                      }
+                  }
+                  $scope.$apply(function(){
+                      $scope.themeArray=resQ;
+                  })
+              }
+              else{
+                  $scope.text='该分类暂无内容';
+                  boxshow($scope.text);
+              }
+          })
+      }
+    };
+    let imagesKey='';
+    $scope.cancelClick=function(){
+        $('#titleClassify').val('');
+        $('#desClassify').val('');
+        $('#contentClassify').val('');
+        imagesKey='';
+        $('.themeImgs').remove();
+        $('.addWords').modal('hide');
+    };
+    $scope.getTagMsg=function(){
+        if( $scope.checkTitle()&&$scope.textareaChat()){
+            var data={
+                themeUserId:sessionStorage.Key,
+                themeClassify:$('#classify').val(),
+                themeTitle:$('#titleClassify').val(),
+                themeDesc:$('#desClassify').val(),
+                themeContent:$('#contentClassify').val(),
+                themeImages:imagesKey
+            };
+            $.post('/api/addThemeMsg',data,function(res){
+                if(res.text=='ok'){
+                    $scope.text='发布成功';
+                    boxshow($scope.text);
+                    $('.addWords').modal('hide');
+                    $('#titleClassify').val('');
+                    $('#desClassify').val('');
+                    $('#contentClassify').val('');
+                    imagesKey='';
+                    $('.themeImgs').remove();
+                }
+                else{
+                    $scope.text='发布失败';
+                    boxshow($scope.text);
+                }
+            })
+        }
+    };
     $.post('/api/getToken',function(res){
         uploader = Qiniu.uploader({
             runtimes: 'html5,flash,html4',
@@ -56,9 +141,9 @@ function startIndexBodyClassify(id,$scope){
                 'FileUploaded': function(up, file, info) {
                     let domain = up.getOption('domain');
                     let res = eval('(' + info + ')');
-                    console.log('info',info)
+                    imagesKey+=res.key+';';
                     let sourceLink = 'http://'+domain +'/'+ res.key;//获取上传文件的链接地址
-                    $('#muti_img').append('<img src='+sourceLink+' style="width:25%;height:100px;margin:10px;"/>')
+                    $('#muti_img').append('<img src='+sourceLink+' class="themeImgs" style="width:25%;height:100px;margin:10px;"/>')
 
                 },
                 'Error': function(up, err, errTip) {
@@ -69,4 +154,44 @@ function startIndexBodyClassify(id,$scope){
             }
         });
     });
+    $scope.checkTitle=function($event){
+        let obj=$('#titleClassify');
+        let objMsg=$('#titleClassifyMsg');
+        if(obj.val()){
+            if(obj.val().length>30){
+                objMsg.css({display:'inline-block'});
+                objMsg.text('标题不能超过30个字');
+                return false;
+            }
+            else{
+                objMsg.css({display:'none'});
+                return true;
+            }
+        }
+        else{
+            objMsg.css({display:'inline-block'});
+            objMsg.text('标题不能为空');
+            return false;
+        }
+    };
+    $scope.textareaChat=function(){
+        let obj=$('#desClassify');
+        let objMsg=$('#desClassifyMsg');
+        if(obj.val()){
+            if(obj.val().length>100){
+                objMsg.css({display:'inline-block'});
+                objMsg.text('描述不能超过100个字');
+                return false;
+            }
+            else{
+                objMsg.css({display:'none'});
+                return true;
+            }
+        }
+        else{
+            objMsg.css({display:'inline-block'});
+            objMsg.text('描述不能为空');
+            return false;
+        }
+    };
 }

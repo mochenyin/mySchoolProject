@@ -1,0 +1,57 @@
+<div style="width:100%;background:#ECECE9;">
+    <div style="width:1005px;min-height:850px;background: white;margin:0 auto;">
+       <div id="themePageHeader">
+           <p style="float:left;font-weight:700;">{{themeTitle}}</p>
+           <p class="THeaderTitle">回复</p>
+           <p class="THeaderTitle">收藏</p>
+           <p class="THeaderTitle">只看作者</p>
+       </div>
+        <div class="themePageBody">
+            <div class="themeLeft">
+                <div></div>
+                <span>楼主</span>
+                <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" />
+                <p>{{userName}}</p>
+            </div>
+            <div class="themeRight" style="padding:15px 20px;">
+                <p style="font-weight:700">{{themeDesc}}</p>
+                <p>
+                    <img ng-repeat="img in themeImages" style="width:300px;height:300px;margin:15px;" ng-src="http://olcolkmpd.bkt.clouddn.com/{{img}}" />
+                </p>
+                <p>{{themeContent}}</p>
+                <P>1楼&nbsp;&nbsp;&nbsp;{{add_date}}</P>
+            </div>
+        </div>
+        <ul style="list-style: none;margin:0;padding:0;">
+            <li class="themePageBody" ng-repeat="(k,val) in listArray" style="padding:0;">
+                <div class="themeLeft">
+                    <div class="{{val.className}}"></div>
+                    <span class="{{val.className}}">楼主</span>
+                    <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" />
+                    <p>{{val.userName}}</p>
+                </div>
+                <div class="themeRight" style="padding:15px 20px;">
+                    <p>{{val.answerThemeContent}}</p>
+                    <p>
+                        <img ng-repeat="img in val.anserThemeImg" style="width:300px;height:300px;margin:15px;" ng-src="http://olcolkmpd.bkt.clouddn.com/{{img}}" />
+                    </p>
+                    <P>{{k+2}}楼&nbsp;&nbsp;&nbsp;{{val.add_date}}</P>
+                </div>
+            </li>
+        </ul>
+        <div class="answerTheme">
+            <div id="btn-uploader3" style="width:80%;margin:0 auto;height:35px;line-height: 35px;">
+                <span>发表回复：</span>
+                <button class="btn btn-sm btn-primary" id="addMutple">添加图片</button>
+                <span style="display:none;color:red;" id="textThemeMsg"></span>
+                <button ng-click="addAnswerTheme()" class="btn btn-sm btn-success pull-right" style="margin:0 0 0 20px;">发布</button>
+                <button class="btn btn-sm btn-default pull-right" ng-click="cancelAdd()">取消</button>
+            </div>
+            <textarea id="textTheme" ng-blur="checkContent()" class="form-control" maxlength="800" style="width:80%;margin:0 auto;min-height: 200px;"></textarea>
+            <div id="Tmuti_img"  style="width:80%;margin:0 auto;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="mochenyin/js/themePage.js"></script>

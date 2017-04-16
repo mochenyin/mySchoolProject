@@ -506,7 +506,7 @@ _rotr.apis.changeUserRole = function () {
 };
 
 
-//获取分类封面
+//获取分类封面及各分类主题
 _rotr.apis.getCover = function () {
 	var ctx = this;
 	var co = $co(function* () {
@@ -522,165 +522,130 @@ _rotr.apis.getCover = function () {
 	});
 	return co;
 };
-//用户头像接口，提交用户id，返回用户头像地址
-_rotr.apis.userimg = function () {
+//发布文字分享主题内容
+_rotr.apis.addThemeMsg = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var userid = ctx.query.userid || ctx.request.body.userid;
-		var sqlstr = "select img from user_info where userid = " + userid + ";";
+		var themeUserId = ctx.query.themeUserId || ctx.request.body.themeUserId;
+		var themeClassify = ctx.query.themeClassify || ctx.request.body.themeClassify;
+		var themeTitle = ctx.query.themeTitle || ctx.request.body.themeTitle;
+		var themeDesc = ctx.query.themeDesc || ctx.request.body.themeDesc;
+		var themeContent = ctx.query.themeContent || ctx.request.body.themeContent;
+		var themeImages = ctx.query.themeImages || ctx.request.body.themeImages;
+		var sqlstr = "insert into theme(themeUserId,themeClassify,themeTitle,themeDesc,themeContent,themeImages) values(?,?,?,?,?,?);";
+		var sqlstr1 = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date from" +
+			" (select * from (select classifyId,classifyText from classify where classifyId="+themeClassify+" ) c INNER JOIN" +
+			" (select * from theme where themeId=(select last_insert_id())) t where t.themeClassify=c.classifyId) a INNER JOIN (select userId,userName,userImg from user)" +
+			" u where a.themeUserId=u.userId ;";
+		var paramtc=[themeUserId,themeClassify,themeTitle,themeDesc,themeContent,themeImages];
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr,paramtc);
+		var rows1 = yield _ctnu([_Mysql.conn, 'query'], sqlstr1);
+		if (rows){
+			ctx.body = __newMsg(1, 'ok', rows1);
+		}
+		return ctx;
+	});
+	return co;
+};
+//获取各分类主题
+_rotr.apis.getThemeMsg = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var id = ctx.query.id || ctx.request.body.id;
+		var index = ctx.query.index || ctx.request.body.index;
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+			" from (select * from theme t INNER JOIN (select classifyId,isClassifyIndex,classifyText from classify where" +
+			" isClassifyIndex="+id+") c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
+			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		if (!rows) Error("找不到用户");
-		var dat = {
-			img: rows[0]
-		};
-		ctx.body = __newMsg(1, 'ok', dat);
+		if(rows.length!=0){
+			ctx.body = __newMsg(1, 'ok', rows);
+		}
+		else{
+			ctx.body = __newMsg(1, 'no');
+		}
 		return ctx;
 	});
 	return co;
 };
-//更新用户头像接口，提交用户id，头像地址
-_rotr.apis.upUserimg = function () {
+
+//获取子分类主题
+_rotr.apis.getClassify = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var userid = ctx.query.userid || ctx.request.body.userid;
-		var src = ctx.query.src || ctx.request.body.src;
-		var sqlstr = "UPDATE user_info SET img='" + src + "' WHERE userid=" + userid + ";";
+		var classifyId = ctx.query.classifyId || ctx.request.body.classifyId;
+		var index = ctx.query.index || ctx.request.body.index;
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+			" from (select * from theme t INNER JOIN (select classifyId,classifyText from classify where" +
+			" classifyId="+classifyId+") c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
+			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		if (!rows) Error("找不到用户");
-		var dat = {
-			img: rows[0]
-		};
-		ctx.body = __newMsg(1, 'ok', dat);
+		if(rows.length!=0){
+			ctx.body = __newMsg(1, 'ok', rows);
+		}
+		else{
+			ctx.body = __newMsg(1, 'no');
+		}
 		return ctx;
 	});
 	return co;
 };
 
-//布置作业接口，插入失败返回错误内容，插入成功返回成功信息
-_rotr.apis.addwork = function () {
+//获取发现页面主题
+_rotr.apis.getFindPageTheme = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var userid = ctx.query.useid || ctx.request.body.useid;
-		var creatdate = ctx.query.creatdate || ctx.request.body.creatdate;
+		var index = ctx.query.index || ctx.request.body.index;
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+			" from (select * from theme t INNER JOIN (select classifyId,classifyText from classify " +
+			" ) c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
+			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
+		var sqlstr2='select classifyId,classifyText from classify where isClassifyIndex != 0 and classifyText !="默认";';
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		var rows2 = yield _ctnu([_Mysql.conn, 'query'], sqlstr2);
+			ctx.body = __newMsg(1, 'ok', {rows:rows,rows2:rows2});
 
-		var str = "SELECT r.name FROM user_info u LEFT JOIN role r ON u.role=r.role WHERE userid=" + userid + ";";
-		var role = yield _ctnu([_Mysql.conn, 'query'], str);
-		if (role[0].name == '学生') throw Error('您的权限不够！');
-
-		var title = ctx.query.title || ctx.request.body.title;
-		if (!title) throw Error('标题格式不正确');
-
-		var content = ctx.query.content || ctx.request.body.content;
-		if (!content) throw Error('内容格式不正确');
-
-		var Sselect = ctx.query.Sselect || ctx.request.body.Sselect;
-		if (!Sselect) throw Error('课程格式不正确');
-
-		var section = ctx.query.section || ctx.request.body.section;
-		if (!section) throw Error('章节格式不正确');
-
-		var mark = ctx.query.mark || ctx.request.body.mark;
-		var annex = ctx.query.wenjian || ctx.request.body.wenjian;
-		var fileName = ctx.query.fileName || ctx.request.body.fileName;
-
-		var time = ctx.query.time || ctx.request.body.time;
-
-		var day = ((time.substring(5, 7) - 0) - (creatdate.substring(5, 7) - 0)) * 30;
-		var t = ((time.substring(0, 4) - 0) - (creatdate.substring(0, 4) - 0)) * 365;
-		var m = ((time.substring(0, 4) - 0) - (creatdate.substring(0, 4) - 0)) * 12;
-		if (!time) throw Error('截止时间格式不正确');
-
-		if ((time.substring(0, 4) - 0) < (creatdate.substring(0, 4) - 0)) throw Error('截止时间不可小于当前时间');
-
-
-		else if ((time.substring(5, 7) - 0 + (m - 0)) < (creatdate.substring(5, 7) - 0)) {
-
-			throw Error('截止时间不可小于当前时间');
-		} else if ((time.substring(8, 10) - 0 + (day - 0) + (t - 0)) < (creatdate.substring(8, 10) - 0)) throw Error('截止时间不可小于当前时间');
-
-
-		if ((time.substring(8, 10) - 0) == (creatdate.substring(8, 10) - 0)) throw Error('请至少给出一天时间给学生作答');
-
-		var row = yield _ctnu([_Mysql.conn, 'query'], "select cid from course_info where name='" + Sselect + "';");
-		var cid = row[0].cid;
-		var parament = [userid, title, content, cid, section, mark, annex, time, creatdate, fileName];
-
-		var sqlstr = "insert into work_info(userid,title,content,cid,section,mark,annex,enddate,creatdate,fileName) values(?,?,?,?,?,?,?,?,?,?)";
-		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr, parament);
-		if (rows.affectedRows == 0) throw Error('作业发布失败');
-
-		var sqlstr1 = "select wid from  work_info where userid=? and title=? and content=? and cid=? and section=? and enddate=? and creatdate=? ";
-
-		var parament1 = [userid, title, content, cid, section, time, creatdate];
-		var row1 = yield _ctnu([_Mysql.conn, 'query'], sqlstr1, parament1);
-
-		console.log(">>>>", row1[0].wid);
-
-		ctx.body = __newMsg(1, 'ok', row1[0].wid);
 		return ctx;
 	});
 	return co;
 };
 
-//教师更新作业，提交wid 作业信息，返回更新状况
-_rotr.apis.updatework = function () {
+//获取主题详情
+_rotr.apis.getThemeDetail = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var userid = ctx.query.useid || ctx.request.body.useid;
-		var wid = ctx.query.wid || ctx.request.body.wid;
-		var creatdate = ctx.query.creatdate || ctx.request.body.creatdate;
-
-		var str = "SELECT r.name FROM user_info u LEFT JOIN role r ON u.role=r.role WHERE userid=" + userid + ";";
+		var themeId = ctx.query.themeId || ctx.request.body.themeId;
+		var str = "select userId,themeId,themeTitle,themeDesc,themeContent,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date " +
+			"from(select * from (select classifyId,classifyText from classify ) c INNER JOIN" +
+			" (select * from theme where themeId="+themeId+") t where t.themeClassify=c.classifyId) a INNER JOIN (select userId,userName,userImg from user)" +
+			" u where a.themeUserId=u.userId ;";
+		var str2="select userId,userName,userImg,themeAnswerId,answerThemeContent,anserThemeImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+			" from user INNER JOIN (select * from themeanswer where themeId="+themeId+") t where t.answerThemeUserId=user.userId;"
 		var role = yield _ctnu([_Mysql.conn, 'query'], str);
-		if (role[0].name == '学生') throw Error('您的权限不够！');
+		var rows = yield _ctnu([_Mysql.conn, 'query'], str2);
+		if(role&&rows){
+			ctx.body = __newMsg(1, 'ok',{role:role,rows:rows});
+		}
+		return ctx;
+	});
+	return co;
+};
 
-		var str2 = "SELECT userid from work_info WHERE wid=" + wid + ";";
-		var role1 = yield _ctnu([_Mysql.conn, 'query'], str2);
-		if (role1[0].userid != userid) throw Error('您的权限不够！');
+//发布主题回复
+_rotr.apis.addThemeAnswer = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var answerThemeUserId = ctx.query.answerThemeUserId || ctx.request.body.answerThemeUserId;
+		var themeId = ctx.query.themeId || ctx.request.body.themeId;
+		var answerThemeContent = ctx.query.answerThemeContent || ctx.request.body.answerThemeContent;
+		var anserThemeImg = ctx.query.anserThemeImg || ctx.request.body.anserThemeImg;
+        var paramtcl=[answerThemeUserId,themeId,answerThemeContent,anserThemeImg];
+		var sqlstr = "insert into themeAnswer(answerThemeUserId,themeId,answerThemeContent,anserThemeImg) values(?,?,?,?)";
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr,paramtcl);
+		if (rows.affectedRows == 1){
+			ctx.body = __newMsg(1, 'ok', rows);
+		}
 
-
-		var title = ctx.query.title || ctx.request.body.title;
-		if (!title) throw Error('标题格式不正确');
-
-		var content = ctx.query.content || ctx.request.body.content;
-		if (!content) throw Error('内容格式不正确');
-
-		var Sselect = ctx.query.Sselect || ctx.request.body.Sselect;
-		console.log(">>>>kecheng", Sselect)
-		if (!Sselect) throw Error('课程格式不正确');
-
-		var section = ctx.query.section || ctx.request.body.section;
-		if (!section) throw Error('章节格式不正确');
-
-		var mark = ctx.query.mark || ctx.request.body.mark;
-		var annex = ctx.query.wenjian || ctx.request.body.wenjian;
-		var fileName = ctx.query.fileName || ctx.request.body.fileName;
-
-		var enddate = ctx.query.enddate || ctx.request.body.enddate;
-
-		var day = ((enddate.substring(5, 7) - 0) - (creatdate.substring(5, 7) - 0)) * 30;
-		var t = ((enddate.substring(0, 4) - 0) - (creatdate.substring(0, 4) - 0)) * 365;
-		var m = ((enddate.substring(0, 4) - 0) - (creatdate.substring(0, 4) - 0)) * 12;
-		if (!enddate) throw Error('截止时间格式不正确');
-
-		if ((enddate.substring(0, 4) - 0) < (creatdate.substring(0, 4) - 0)) throw Error('截止时间不可小于当前时间');
-
-		else if ((enddate.substring(5, 7) - 0) + (m - 0) < (creatdate.substring(5, 7) - 0)) throw Error('截止时间不可小于当前时间');
-
-		else if ((enddate.substring(8, 10) - 0 + (day - 0) + (t - 0)) < (creatdate.substring(8, 10) - 0)) throw Error('截止时间不可小于当前时间');
-
-
-		if ((enddate.substring(8, 10) - 0) == (creatdate.substring(8, 10) - 0)) throw Error('请至少给出一天时间给学生作答');
-
-		var row = yield _ctnu([_Mysql.conn, 'query'], "select cid from course_info where name='" + Sselect + "';");
-		console.log(">>>>>rowcid", row)
-		var cid = row[0].cid;
-		var parament = [title, content, cid, section, mark, annex, enddate, fileName, wid];
-
-		var sqlstr = "UPDATE work_info SET title=?,content=?,cid=?,section=?,mark=?,annex=?,enddate=?,filename=? WHERE wid=?";
-		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr, parament);
-		if (rows.changedRows == 0) throw Error('作业更新失败');
-		ctx.body = __newMsg(1, 'ok', rows);
 		return ctx;
 	});
 	return co;

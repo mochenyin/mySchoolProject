@@ -29,6 +29,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'mochenyin/findPwd.html',
             controller: 'findPwdController',
         })
+        .state('silence.themePage',{
+            url:'/themePage/:themeId',
+            views:{
+                '@':{
+                    templateUrl: 'mochenyin/themePage.html',
+                    controller: 'themePageController',
+                }
+            }
+        })
            .state('silence.index',{
                url:'/index',
                templateUrl: 'mochenyin/myIndex.html',
@@ -149,6 +158,10 @@ app.controller('indexFindController',function($scope){
 app.controller('indexPersonalController',function($scope){
     $('.indexTab:eq(3)').addClass('indexActive');
     getPersonalPageController($scope)
+});
+//主题页面控制器
+app.controller('themePageController',function($stateParams,$scope){
+    getThemePageController($stateParams.themeId,$scope);
 });
 
 

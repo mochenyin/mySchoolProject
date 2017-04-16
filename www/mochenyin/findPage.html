@@ -1,34 +1,21 @@
-<div ng-controller="indexFindController" style="width:100%;min-height: 850px;background:#ECECE9;">
+<div  style="width:100%;min-height: 850px;background:#ECECE9;">
    <div class="myIndexBody" style="min-height: 850px;">
        <ul style="padding:40px 0 0 0;">
-           <li style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ; ">
-              <a href="#" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
-                  <div style="width:100px;text-align: center">
-                      <p>{{userName}}</p>
-                      <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" style="width:50px;height:50px;" />
-                  </div>
-                  <div style="flex:1;color:black;">
-                      <p style="font-weight:bold;">古诗词</p>
-                      <p>今天我给大家分享一篇我很喜欢的诗歌--《将进酒》，及我对它的看法</p>
-                      <div style="display:flex;flex-flow:row;">
-                          <p style="flex:3">2017-04-02 13:08:56</p>
-                          <p style="flex:1">赞:2043</p>
-                          <p style="flex:1">回复:2043</p>
-                      </div>
-                  </div>
-              </a>
-           </li>
-           <li style="width:850px;margin:0 auto 40px auto; box-shadow:1px 1px 1px 1px #9E9E9E ; ">
-               <a href="#" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
+           <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
+               <a ui-sref="silence.themePage({themeId:'{{val.themeId}}'})" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
                    <div style="width:100px;text-align: center">
-                       <p>{{userName}}</p>
-                       <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" style="width:50px;height:50px;" />
+                       <p>{{val.userName}}</p>
+                       <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" style="width:50px;height:50px;" />
                    </div>
                    <div style="flex:1;color:black;">
-                       <p style="font-weight:bold;">古诗词</p>
-                       <p>今天我给大家分享一篇我很喜欢的诗歌--《将进酒》，及我对它的看法</p>
+                       <p style="font-weight:bold;">{{val.classifyText}}</p>
+                       <p>{{val.themeTitle}}</p>
+                       <p>{{val.themeDesc}}</p>
+                       <div>
+                           <img ng-repeat="img in val.themeImages" style="margin:15px 10px;width:200px;height:160px;" ng-src='http://olcolkmpd.bkt.clouddn.com/{{img}}'/>
+                       </div>
                        <div style="display:flex;flex-flow:row;">
-                           <p style="flex:3">2017-04-02 13:08:56</p>
+                           <p style="flex:3">{{val.add_date}}</p>
                            <p style="flex:1">赞:2043</p>
                            <p style="flex:1">回复:2043</p>
                        </div>
@@ -36,6 +23,42 @@
                </a>
            </li>
        </ul>
+       <div class="wow bounceInDown" style="position:fixed;top:120px;right:120px;" id="addTag"  ng-click="addTheme()">
+           我要投稿
+       </div>
    </div>
 </div>
+<div class="modal fade addWords" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="min-height:400px;padding:10px 20px;position: relative;">
+            <form class="form-chat" role="form" onsubmit="return false;">
+                <span>标题：</span><span style="display:none;color:red;" id="titleClassifyMsg"></span>
+                <input type="text" id="titleClassify" class="form-control" placeholder="title" ng-blur="checkTitle($event)"/>
+                <span>分类：</span>
+                <select class="form-control" style="width:200px;" id="classify">
+                    <option ng-repeat="(k,val) in classify" value={{val.classifyId}}> {{val.classifyText}}</option>
+                </select>
+                <span>描述：</span><span style="display:none;color:red;" id="desClassifyMsg"></span>
+                <input type="text" id="desClassify" class="form-control" placeholder="describe" ng-blur="textareaChat($event)" />
+                <span>正文：</span>
+                <textarea id="contentClassify" style="min-height:200px;"  class="form-control" placeholder="content"></textarea>
+                <div  id="btn-uploader2" style="margin:10px 0;">
+                    <button class="btn btn-primary" id="addMutple">添加图片</button>
+                </div>
+                <div id="muti_img">
+
+                </div>
+                <div style="width:50%;position: absolute;bottom:20px;right:40px;">
+                    <button class="btn btn-primary pull-right" style="margin-left:20px;" ng-click="getTagMsg()">确定</button>
+                    <button class="btn btn-default pull-right"  ng-click="cancelClick()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+        new WOW().init();
+    };
+</script>
 <script src="mochenyin/js/findPage.js"></script>
