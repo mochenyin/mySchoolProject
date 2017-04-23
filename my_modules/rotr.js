@@ -553,13 +553,19 @@ _rotr.apis.getThemeMsg = function () {
 	var co = $co(function* () {
 		var id = ctx.query.id || ctx.request.body.id;
 		var index = ctx.query.index || ctx.request.body.index;
-		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,classifyId,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
 			" from (select * from theme t INNER JOIN (select classifyId,isClassifyIndex,classifyText from classify where" +
 			" isClassifyIndex="+id+") c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
 			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
+		var sqlstr3='select saveThemeId,count(*) as saveCount from save GROUP BY saveThemeId;';
+		var sqlstr4='select thumbThemeId,count(*) as thumbCount from thumb GROUP BY thumbThemeId;';
+		var sqlstr5='select themeId,count(*) as answerCount from themeanswer GROUP BY themeId;';
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		var rows3 = yield _ctnu([_Mysql.conn, 'query'], sqlstr3);
+		var rows4 = yield _ctnu([_Mysql.conn, 'query'], sqlstr4);
+		var rows5 = yield _ctnu([_Mysql.conn, 'query'], sqlstr5);
 		if(rows.length!=0){
-			ctx.body = __newMsg(1, 'ok', rows);
+			ctx.body = __newMsg(1, 'ok', {rows:rows,rows3:rows3,rows4:rows4,rows5:rows5});
 		}
 		else{
 			ctx.body = __newMsg(1, 'no');
@@ -575,13 +581,19 @@ _rotr.apis.getClassify = function () {
 	var co = $co(function* () {
 		var classifyId = ctx.query.classifyId || ctx.request.body.classifyId;
 		var index = ctx.query.index || ctx.request.body.index;
-		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,classifyId,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
 			" from (select * from theme t INNER JOIN (select classifyId,classifyText from classify where" +
 			" classifyId="+classifyId+") c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
 			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
+		var sqlstr3='select saveThemeId,count(*) as saveCount from save where classifyId='+classifyId+' GROUP BY saveThemeId;';
+		var sqlstr4='select thumbThemeId,count(*) as thumbCount from thumb where classifyId='+classifyId+' GROUP BY thumbThemeId;';
+		var sqlstr5='select themeId,count(*) as answerCount from themeanswer where classifyId='+classifyId+' GROUP BY themeId;';
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		var rows3 = yield _ctnu([_Mysql.conn, 'query'], sqlstr3);
+		var rows4 = yield _ctnu([_Mysql.conn, 'query'], sqlstr4);
+		var rows5 = yield _ctnu([_Mysql.conn, 'query'], sqlstr5);
 		if(rows.length!=0){
-			ctx.body = __newMsg(1, 'ok', rows);
+			ctx.body = __newMsg(1, 'ok', {rows:rows,rows3:rows3,rows4:rows4,rows5:rows5});
 		}
 		else{
 			ctx.body = __newMsg(1, 'no');
@@ -596,15 +608,44 @@ _rotr.apis.getFindPageTheme = function () {
 	var ctx = this;
 	var co = $co(function* () {
 		var index = ctx.query.index || ctx.request.body.index;
-		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,classifyId,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
 			" from (select * from theme t INNER JOIN (select classifyId,classifyText from classify " +
 			" ) c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user)" +
 			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
 		var sqlstr2='select classifyId,classifyText from classify where isClassifyIndex != 0 and classifyText !="默认";';
+		var sqlstr3='select saveThemeId,count(*) as saveCount from save GROUP BY saveThemeId;';
+		var sqlstr4='select thumbThemeId,count(*) as thumbCount from thumb GROUP BY thumbThemeId;';
+		var sqlstr5='select themeId,count(*) as answerCount from themeanswer GROUP BY themeId;';
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
 		var rows2 = yield _ctnu([_Mysql.conn, 'query'], sqlstr2);
-			ctx.body = __newMsg(1, 'ok', {rows:rows,rows2:rows2});
+		var rows3 = yield _ctnu([_Mysql.conn, 'query'], sqlstr3);
+		var rows4 = yield _ctnu([_Mysql.conn, 'query'], sqlstr4);
+		var rows5 = yield _ctnu([_Mysql.conn, 'query'], sqlstr5);
+			ctx.body = __newMsg(1, 'ok', {rows:rows,rows2:rows2,rows3:rows3,rows4:rows4,rows5:rows5});
+		return ctx;
+	});
+	return co;
+};
 
+//获取个人主题
+//获取发现页面主题
+_rotr.apis.getPersonalTheme = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var sqlstr = "select themeId,themeTitle,themeDesc,themeImages,classifyText,classifyId,userName,userImg,DATE_FORMAT(addTime, '%Y-%c-%d %T' ) as add_date" +
+			" from (select * from theme t INNER JOIN (select classifyId,classifyText from classify " +
+			" ) c where t.themeClassify=c.classifyId ) a INNER JOIN (select userId,userName,userImg from user where userId="+userId+")" +
+			" u where a.themeUserId=u.userId ORDER BY addTime desc;";
+
+		var sqlstr3='select saveThemeId,count(*) as saveCount from save  GROUP BY saveThemeId;';
+		var sqlstr4='select thumbThemeId,count(*) as thumbCount from thumb  GROUP BY thumbThemeId;';
+		var sqlstr5='select themeId,count(*) as answerCount from themeAnswer  GROUP BY themeId;';
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		var rows3 = yield _ctnu([_Mysql.conn, 'query'], sqlstr3);
+		var rows4 = yield _ctnu([_Mysql.conn, 'query'], sqlstr4);
+		var rows5 = yield _ctnu([_Mysql.conn, 'query'], sqlstr5);
+		ctx.body = __newMsg(1, 'ok', {rows:rows,rows3:rows3,rows4:rows4,rows5:rows5});
 		return ctx;
 	});
 	return co;
@@ -639,8 +680,9 @@ _rotr.apis.addThemeAnswer = function () {
 		var themeId = ctx.query.themeId || ctx.request.body.themeId;
 		var answerThemeContent = ctx.query.answerThemeContent || ctx.request.body.answerThemeContent;
 		var anserThemeImg = ctx.query.anserThemeImg || ctx.request.body.anserThemeImg;
-        var paramtcl=[answerThemeUserId,themeId,answerThemeContent,anserThemeImg];
-		var sqlstr = "insert into themeAnswer(answerThemeUserId,themeId,answerThemeContent,anserThemeImg) values(?,?,?,?)";
+		var classifyId=ctx.query.classifyId||ctx.request.body.classifyId;
+        var paramtcl=[answerThemeUserId,themeId,answerThemeContent,anserThemeImg,classifyId];
+		var sqlstr = "insert into themeAnswer(answerThemeUserId,themeId,answerThemeContent,anserThemeImg,classifyId) values(?,?,?,?,?)";
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr,paramtcl);
 		if (rows.affectedRows == 1){
 			ctx.body = __newMsg(1, 'ok', rows);
@@ -651,48 +693,106 @@ _rotr.apis.addThemeAnswer = function () {
 	return co;
 };
 
-//教师作业列表接口  提交userid   返回该教师用户的所有作业
-_rotr.apis.worklist = function () {
+//修改收藏状态
+_rotr.apis.changeSave = function () {
 	var ctx = this;
 	var co = $co(function* () {
-		var userid = ctx.query.userid || ctx.request.body.userid;
-		var sqlstr = "select w.wid,w.cid,w.title,u.nick,number from work_info w LEFT JOIN user_info u ON w.userid=u.userid LEFT JOIN(SELECT wid,COUNT(wid) number FROM sw_info s where s.answer IS not null GROUP BY wid) x ON w.wid=x.wid where w.userid = '" + userid + "';";
-		var dat = {};
-
-		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-
-		console.log(">>>>", rows);
-		ctx.body = rows;
-		return ctx;
-	});
-	return co;
-};
-
-//学生作业列表接口，提交userid  返回该学生用户的所有作业的wid enddate title name课程编号
-_rotr.apis.Sworklist = function () {
-	var ctx = this;
-	var co = $co(function* () {
-		var userid = ctx.query.userid || ctx.request.body.userid;
-		var id = ctx.query.id || ctx.request.body.id;
-		var sqlstr = '';
-		if (id == 1) {
-			sqlstr = "SELECT s.wid,w.enddate,w.title,c.`name` FROM sw_info s LEFT JOIN work_info w ON s.wid=w.wid LEFT JOIN course_info c ON w.cid=c.cid WHERE s.userid=" + userid + " and answer IS NULL ORDER BY s.serianumber desc;";
-
-		} else if (id == 2) {
-			sqlstr = "SELECT s.wid,w.enddate,w.title,c.`name` FROM sw_info s LEFT JOIN work_info w ON s.wid=w.wid LEFT JOIN course_info c ON w.cid=c.cid WHERE s.userid=" + userid + " and answer IS NOT NULL ORDER BY s.serianumber desc;";
-		} else {
-			sqlstr = "SELECT s.wid,w.enddate,w.title,c.`name` FROM sw_info s LEFT JOIN work_info w ON s.wid=w.wid LEFT JOIN course_info c ON w.cid=c.cid WHERE s.userid=" + userid + " ORDER BY s.serianumber desc;";
+		var state = ctx.query.state || ctx.request.body.state;
+		var themeId = ctx.query.themeId || ctx.request.body.themeId;
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var classifyId=ctx.query.classifyId||ctx.request.body.classifyId;
+		var sqlstr;
+		if(state==0){
+			sqlstr = "select * from save where saveThemeId="+themeId+" and saveUserId="+userId+";";
 		}
-
-		var dat = {};
+		else if(state==1){
+			sqlstr = "insert into save(saveThemeId,saveUserId,classifyId) values("+themeId+","+userId+","+classifyId+");";
+		}
+		else{
+			sqlstr = "delete from save where saveThemeId="+themeId+" and saveUserId="+userId+";";
+		}
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
-		console.log(">>>", rows);
-		ctx.body = __newMsg(1, 'ok', rows);
+		if(state==0&&rows.length==1){
+			ctx.body =__newMsg(1, 'ok');
+		}
+		else if(state==0&&rows.length!=1){
+			ctx.body =__newMsg(1, 'no');
+		}
+		else if(state!=0&&rows.affectedRows==1){
+			ctx.body =__newMsg(1, 'ok');
+		}
+		else{
+			ctx.body =__newMsg(1, 'waite');
+		}
 		return ctx;
 	});
 	return co;
 };
 
+
+//修改点赞状态
+_rotr.apis.changeThumb = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var state = ctx.query.state || ctx.request.body.state;
+		var themeId = ctx.query.themeId || ctx.request.body.themeId;
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var authorId = ctx.query.authorId || ctx.request.body.authorId;
+		var classifyId=ctx.query.classifyId||ctx.request.body.classifyId;
+		var sqlstr;
+		if(state==0){
+			sqlstr = "select * from thumb where thumbThemeId="+themeId+" and thumbUserId="+userId+";";
+		}
+		else if(state==1){
+			sqlstr = "insert into thumb(thumbThemeId,thumbUserId,authorId,classifyId) values("+themeId+","+userId+","+authorId+","+classifyId+");";
+		}
+		else{
+			sqlstr = "delete from thumb where thumbThemeId="+themeId+" and thumbUserId="+userId+";";
+		}
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		if(state==0&&rows.length==1){
+			ctx.body =__newMsg(1, 'ok');
+		}
+		else if(state==0&&rows.length!=1){
+			ctx.body =__newMsg(1, 'no');
+		}
+		else if(state!=0&&rows.affectedRows==1){
+			ctx.body =__newMsg(1, 'ok');
+		}
+		else{
+			ctx.body =__newMsg(1, 'waite');
+		}
+		return ctx;
+	});
+	return co;
+};
+//获取个人主页基本信息
+_rotr.apis.getPersonalMsg = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var sqlstr='select count(*) as countDatas from save where saveUserId='+userId+'  UNION' +
+			' select count(*)  from thumb where thumbUserId='+userId+' UNION' +
+			' select count(*)  from themeAnswer where answerThemeUserId='+userId+' UNION ' +
+			' select count(*)  from theme where themeUserId='+userId+';';
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		ctx.body = __newMsg(1, 'ok', {rows:rows});
+		return ctx;
+	});
+	return co;
+};
+
+_rotr.apis.getPersonBase = function () {
+	var ctx = this;
+	var co = $co(function* () {
+		var userId = ctx.query.userId || ctx.request.body.userId;
+		var	sqlstr = "SELECT * from user where userId="+userId+";";
+		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr);
+		ctx.body = __newMsg(1, 'ok', {rows:rows});
+		return ctx;
+	});
+	return co;
+};
 //仓库作业列表接口，返回所有老师布置的作业
 _rotr.apis.hwres = function () {
 	var ctx = this;
