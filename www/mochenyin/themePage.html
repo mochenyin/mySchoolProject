@@ -2,9 +2,10 @@
     <div style="width:1005px;min-height:850px;background: white;margin:0 auto;">
        <div id="themePageHeader">
            <p style="float:left;font-weight:700;">{{themeTitle}}</p>
-           <p class="THeaderTitle">回复</p>
-           <p class="THeaderTitle">收藏</p>
-           <p class="THeaderTitle">只看作者</p>
+           <p class="THeaderTitle" ng-click="answer()">回复</p>
+           <p class="THeaderTitle" ng-click="saveTheme()">{{saveText}}</p>
+           <p class="THeaderTitle" ng-click="readAuthor()">{{authorText}}</p>
+           <p class="THeaderTumbe" ng-click="thumb()"><span class="glyphicon glyphicon-thumbs-up"></span></p>
        </div>
         <div class="themePageBody">
             <div class="themeLeft">

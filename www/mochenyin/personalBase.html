@@ -1,0 +1,22 @@
+<form class="userMsgForm" style="width:60%;margin:0 auto;" onsubmit="return false">
+    <span>账号：</span>
+    <input type="text" name="userEmail" value={{userDatas.userEmail}} class="form-control"  />
+    <span>昵称：</span>
+    <input type="text" name="userName" value={{userDatas.userName}} class="form-control"  />
+    <span>性别：</span>
+    <label class="radio-inline">
+        <input type="radio" name="sex"  value='0' />男
+    </label>
+    <label class="radio-inline">
+        <input type="radio" name="sex"  value='1' /> 女
+    </label><br />
+    <span>真实姓名：</span>
+    <input type="text" name="realName" value={{userDatas.realName}} class="form-control" />
+    <span>手机号：</span>
+    <input type="number" name="userPhone" value={{userDatas.userPhone}} class="form-control"  />
+    <span>个性签名：</span>
+    <input type="text" name="sign" value={{userDatas.sign}} class="form-control" />
+    <span>个人描述：</span>
+    <textarea  style="min-height:100px;" value={{userDatas.description}} name="description"  class="form-control" ></textarea>
+</form>
+<script src="mochenyin/js/personalBase.js"></script>

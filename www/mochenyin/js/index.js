@@ -30,7 +30,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: 'findPwdController',
         })
         .state('silence.themePage',{
-            url:'/themePage/:themeId',
+            url:'/themePage/:themeId&&:classifyId',
             views:{
                 '@':{
                     templateUrl: 'mochenyin/themePage.html',
@@ -73,6 +73,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'mochenyin/chatClassify.html',
             controller: 'chatClassifyController',
         })
+        .state('#news',{})
         .state('silence.chatPage.classify.subChat',{
             url:'/subChat/:roomId',
             views:{
@@ -87,6 +88,36 @@ app.config(function($stateProvider, $urlRouterProvider) {
                templateUrl: 'mochenyin/personalPage.html',
                controller: 'indexPersonalController',
            })
+        .state('silence.personalPage.base',{
+            url:'/base',
+            templateUrl: 'mochenyin/personalBase.html',
+            controller: 'indexPersonalBaseController',
+        })
+        .state('silence.personalPage.news',{
+            url:'/news',
+            templateUrl: 'mochenyin/personalNews.html',
+        })
+        .state('silence.personalPage.theme',{
+            url:'/theme',
+            templateUrl: 'mochenyin/personalTheme.html',
+            controller:'indexPersonalThemeController'
+        })
+        .state('silence.personalPage.browser',{
+            url:'/browser',
+            templateUrl: 'mochenyin/personalBrowser.html',
+        })
+        .state('silence.personalPage.save',{
+            url:'/save',
+            templateUrl: 'mochenyin/personalSave.html',
+        })
+        .state('silence.personalPage.care',{
+            url:'/care',
+            templateUrl: 'mochenyin/personalCare.html',
+        })
+        .state('silence.personalPage.fans',{
+            url:'/fans',
+            templateUrl: 'mochenyin/personalFans.html',
+        })
 });
 app.run(function ($rootScope) {
     $rootScope.navurl = 'mochenyin/public/nav.html';
@@ -159,9 +190,17 @@ app.controller('indexPersonalController',function($scope){
     $('.indexTab:eq(3)').addClass('indexActive');
     getPersonalPageController($scope)
 });
+app.controller('indexPersonalBaseController',function($scope){
+    $('.personalA:eq(0)').addClass('personalActive');
+    getPersonalBasePageController($scope)
+});
+app.controller('indexPersonalThemeController',function($scope){
+    $('.personalA:eq(2)').addClass('personalActive');
+    getPersonalThemePageController($scope)
+});
 //主题页面控制器
 app.controller('themePageController',function($stateParams,$scope){
-    getThemePageController($stateParams.themeId,$scope);
+    getThemePageController($stateParams.themeId,$stateParams.classifyId,$scope);
 });
 
 

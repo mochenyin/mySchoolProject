@@ -311,6 +311,20 @@ a.indexActive{
   border-radius: 3px;
   cursor: pointer;
 }
+.THeaderTumbe{
+  padding:0 6px;
+  width:30px;
+  border-radius: 50%;
+  height:30px;
+  line-height: 30px;
+  text-align: center;
+  background: #fff;
+  border:1px solid darkgray;
+  color:black;
+  float:right;
+  margin:15px;
+  cursor: pointer;
+}
 .THeaderTitle:hover{
   color:white;
   background:dodgerblue;
@@ -383,4 +397,31 @@ a.indexActive{
 }
 .authorBlock{
   display:inline-block;
+}
+.headerPersonal{
+  width:100%;
+  height:50px;
+  border-bottom:1px solid lightgray;
+  display:flex;
+  flex-flow: row;
+  position: relative;
+  bottom: 30px;
+}
+.headerPersonal p{
+  flex:1;
+  line-height: 50px;
+  text-align: center;
+  border-right:1px solid lightgray;
+}
+.headerPersonal p a{
+  color:darkslategray;
+}
+.headerPersonal a:hover{
+  color:cornflowerblue;
+}
+.userMsgForm input{
+  margin:5px 0 15px 0;
+}
+.personalActive{
+  color:cornflowerblue;
 }

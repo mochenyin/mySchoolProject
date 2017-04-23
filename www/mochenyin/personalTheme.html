@@ -1,0 +1,25 @@
+<ul style="padding:40px 0 0 0;list-style: none">
+    <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
+        <a ui-sref="silence.themePage({themeId:'{{val.themeId}}',classifyId:'{{val.classifyId}}'})" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
+            <div style="width:100px;text-align: center">
+                <p>{{val.userName}}</p>
+                <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" style="width:50px;height:50px;" />
+            </div>
+            <div style="flex:1;color:black;">
+                <p style="font-weight:bold;">{{val.classifyText}}</p>
+                <p>{{val.themeTitle}}</p>
+                <p>{{val.themeDesc}}</p>
+                <div>
+                    <img ng-repeat="img in val.themeImages" style="margin:15px 10px;width:200px;height:160px;" ng-src='http://olcolkmpd.bkt.clouddn.com/{{img}}'/>
+                </div>
+                <div style="display:flex;flex-flow:row;">
+                    <p style="flex:3">{{val.add_date}}</p>
+                    <p style="flex:1">赞:{{val.thumb}}</p>
+                    <p style="flex:1">收藏:{{val.save}}</p>
+                    <p style="flex:1">回复:{{val.answer}}</p>
+                </div>
+            </div>
+        </a>
+    </li>
+</ul>
+<script src="mochenyin/js/personalTheme.js"></script>
