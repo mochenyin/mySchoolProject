@@ -1,1 +1,11 @@
-<h1>browser</h1>
+<ul style="padding:40px 0 0 0;list-style: none">
+    <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;box-shadow:1px 1px 1px 1px #9E9E9E;">
+        <a ui-sref="silence.themePage({themeId:'{{val.themeId}}',classifyId:'{{val.classifyId}}'})" style="width:100%;text-decoration: none;">
+         <div style="margin:0 15px;height:50px;line-height: 50px;font-weight:700;">{{val.themeTitle}}</div>
+         <div  style="margin:0 15px;height:30px;line-height: 30px;">
+             <span style="color:grey">{{val.classifyText}}</span><span class="pull-right" style="color:grey;">{{val.add_date}}</span>
+         </div>
+        </a>
+    </li>
+</ul>
+<script src="mochenyin/js/personalBrowser.js"></script>

@@ -13,6 +13,24 @@ function startIndexBody($scope){
             $scope.activeImg=res.data.active;
         });
     });
+    $.get('/api/getAllUser',function(res){
+          if(res.text=='ok'){
+              let resQ=res.data.rows;
+              for(var key in resQ){
+                  resQ[key].description=resQ[key].description?resQ[key].description:'暂无';
+              }
+              $scope.$apply(function(){
+                  $scope.themeArray=resQ;
+              });
+          }
+    });
+    $.get('/api/getTopIndex',function(res){
+        if(res.text=='ok'){
+            $scope.$apply(function(){
+                $scope.topIndex=res.data.rows;
+            })
+        }
+    });
     $scope.userName=sessionStorage.userName;
     $scope.userImg=sessionStorage.userImg;
 }

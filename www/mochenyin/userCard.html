@@ -6,13 +6,66 @@
 
     </div>
     <div style="width:100%;background:#ECECE9;">
-        <div style="width:1005px;margin:0 auto;background:white;height:800px;">
+        <div style="width:1005px;margin:0 auto;background:white;min-height:800px;">
             <div style="width:140px;height:140px;text-align:center;z-index:3;line-height:140px;background:white;border-radius:50%;position:relative;top:-60px;margin:0 auto;">
                 <img src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" style="width:120px;height:120px;border-radius:50%;box-shadow: 1px 1px 1px 1px #9E9E9E" />
             </div>
-
-
+            <div style="width:200px;height:30px;position:relative;top:-50px;margin:0 auto;">
+                <span style="border-radius:2px;cursor:pointer;display:inline-block;background:lightseagreen;color:white;padding:2px 10px;" ng-click="sendNews()"> 发消息</span>
+                <span class="careSpan pull-right" style="border-radius:2px;cursor:pointer;border:1px solid lightgray;display:inline-block;padding:2px 10px;" ng-click="toggleCare()">{{care}}</span>
+            </div>
+            <div style="width:400px;margin:0 auto;position:relative;top:-20px;text-align: right">
+                <span>关注：{{myStar}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span>粉丝：{{stared}}</span></div>
+            <div>
+                <h4 style="width:100px;text-align:center;margin:0 auto;">基本资料</h4>
+                <p class="otherUserP">昵称：{{userName}}</p>
+                <p class="otherUserP">性别：{{userSex}}</p>
+                <p class="otherUserP">个性签名：{{sign}}</p>
+                <p class="otherUserP">自我描述：{{description}}</p>
+            </div>
+            <div>
+                <h4 style="width:100px;text-align:center;margin:20px auto;">他的动态</h4>
+                <ul style="padding:10px 0 0 0;list-style: none">
+                    <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
+                        <a ui-sref="silence.themePage({themeId:'{{val.themeId}}',classifyId:'{{val.classifyId}}'})" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
+                            <div style="width:100px;text-align: center">
+                                <p>{{val.userName}}</p>
+                                <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" style="width:50px;height:50px;" />
+                            </div>
+                            <div style="flex:1;color:black;">
+                                <p style="font-weight:bold;">{{val.classifyText}}</p>
+                                <p>{{val.themeTitle}}</p>
+                                <p>{{val.themeDesc}}</p>
+                                <div>
+                                    <img ng-repeat="img in val.themeImages" style="margin:15px 10px;width:200px;height:160px;" ng-src='http://olcolkmpd.bkt.clouddn.com/{{img}}'/>
+                                </div>
+                                <div style="display:flex;flex-flow:row;">
+                                    <p style="flex:3">{{val.add_date}}</p>
+                                    <p style="flex:1">赞:{{val.thumb}}</p>
+                                    <p style="flex:1">收藏:{{val.save}}</p>
+                                    <p style="flex:1">回复:{{val.answer}}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+    <div class="modal fade addNews" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="min-height:300px;padding:10px 20px;position: relative;">
+                <form class="form-chat" role="form" onsubmit="return false;">
+                    <span>发消息：</span><span style="display:none;color:red;" id="textNewsMsg"></span>
+                    <textarea id="textNews" ng-blur="checkContent()" class="form-control" placeholder="@{{userName}}" maxlength="800" style="width:80%;margin:0 auto;min-height: 200px;"></textarea>
+                    <div style="width:50%;position: absolute;bottom:20px;right:40px;">
+                        <button class="btn btn-primary pull-right" style="margin-left:20px;" ng-click="getTagMsg()">确定</button>
+                        <button class="btn btn-default pull-right"  ng-click="cancelClick()">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
 </div>
 <script src="mochenyin/js/userCard.js"></script>

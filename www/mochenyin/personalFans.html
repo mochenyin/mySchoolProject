@@ -1,1 +1,20 @@
-<h1>fans</h1>
+<ul  class="myIndexBody2">
+    <li ng-repeat="(k,val) in themeArray">
+        <a ui-sref="silence.userCard({userId:'{{val.userId}}'})" >
+            <div style="display:flex;flex-flow:row;height:80px;">
+                <div style="flex:1;text-align: center">
+                    <img class="myIndexBody2Img" ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" />
+                </div>
+                <div style="flex:2;padding:10px 0 0 0;">
+                    <p style="color:black;">{{val.userName}}</p>
+                    <p style="color:darkgrey">{{val.sign}}</p>
+                </div>
+            </div>
+            <div>
+                <p style="color:black">个人简介：</p>
+                <p style="color:black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{val.description}}</p>
+            </div>
+        </a>
+    </li>
+</ul>
+<script src="mochenyin/js/personalFans.js"></script>

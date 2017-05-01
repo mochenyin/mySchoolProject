@@ -68,82 +68,61 @@
             <h3 class="wow bounceInDown" data-wow-delay="0.5s" style="position: relative;top:30px;width:220px;margin:0 auto;text-align: center">高山流水，伯牙子期</h3>
             <h4 class="wow bounceInRight" data-wow-delay="0.5s" style="position:relative;top:50px;width:500px;margin:0 auto;text-align: center">高山流水遇知音,知音不在谁堪听,这里是否会有你的知音</h4>
         </div>
-        <div class="myIndexBody">
+        <div class="myIndexBody" style="overflow: hidden">
             <ul  class="myIndexBody2">
-                <li>
-                    <a ui-sref="silence.userCard" >
-                       <div style="display:flex;flex-flow:row;height:80px;">
-                           <div style="flex:1;text-align: center">
-                               <img class="myIndexBody2Img" ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" />
-                           </div>
-                           <div style="flex:2;padding:10px 0 0 0;">
-                               <p style="color:black;">{{userName}}</p>
-                               <p style="color:darkgrey">往事莫沉吟，身闲时序好</p>
-                           </div>
-                       </div>
-                        <div>
-                            <p style="text-align: center;">他的关注：2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他的粉丝：46&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他的帖子：96</p>
-                            <p style="color:black">个人简介：</p>
-                            <p style="color:black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;平时喜欢研究唐诗宋词，喜欢中国传统文化，每天话花四个小时研究诗词歌赋，向往纵情山水的生活，
-                                希望能觅得一知音，体验高山流水，伯牙子期的乐趣</p>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a ui-sref="silence.userCard" >
+                <li ng-repeat="(k,val) in themeArray">
+                    <a ui-sref="silence.userCard({userId:'{{val.userId}}'})" >
                         <div style="display:flex;flex-flow:row;height:80px;">
                             <div style="flex:1;text-align: center">
-                                <img class="myIndexBody2Img" ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" />
+                                <img class="myIndexBody2Img" ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" />
                             </div>
                             <div style="flex:2;padding:10px 0 0 0;">
-                                <p style="color:black;">{{userName}}</p>
-                                <p style="color:darkgrey">往事莫沉吟，身闲时序好</p>
+                                <p style="color:black;">{{val.userName}}</p>
+                                <p style="color:darkgrey">{{val.sign}}</p>
                             </div>
                         </div>
                         <div>
-                            <p style="text-align: center;">他的关注：2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他的粉丝：46&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;他的帖子：96</p>
                             <p style="color:black">个人简介：</p>
-                            <p style="color:black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;平时喜欢研究唐诗宋词，喜欢中国传统文化，每天话花四个小时研究诗词歌赋，向往纵情山水的生活，
-                                希望能觅得一知音，体验高山流水，伯牙子期的乐趣</p>
+                            <p style="color:black">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{val.description}}</p>
                         </div>
                     </a>
                 </li>
             </ul>
         </div>
-        <div class="myIndexTitle" style="background: url('mochenyin/images/classify6.jpg');background-size:100% 100%;">
+        <div class="myIndexTitle" style="clear:both;background: url('mochenyin/images/classify6.jpg');background-size:100% 100%;">
             <h3 class="wow bounceInRight"  data-wow-delay="1s" style="position: relative;top:30px;width:220px;margin:0 auto;text-align: center">时移事易，初心勿忘</h3>
             <h4 class="wow bounceInLeft"  data-wow-delay="1s" style="position:relative;top:50px;width:500px;margin:0 auto;text-align: center">我依然在这里，不负初心</h4>
         </div>
         <div class="myIndexBody">
                 <ul class="myIndexBody3">
                     <li>
-                        <div class="myIndexBody3Ball wow bounceInLeft" style=" left:80px;background: url(http://olcolkmpd.bkt.clouddn.com/{{userImg}});background-size:100% 100%;">
+                        <div class="myIndexBody3Ball wow bounceInLeft" style=" left:80px;background: url(http://olcolkmpd.bkt.clouddn.com/{{topIndex[0].userImg}});background-size:100% 100%;">
                             top:1
                         </div>
-                        <div class="myIndexBody3Quare" style="background:-webkit-gradient(linear,left 0,right 0,from(darkseagreen),to(#42b275));">
-                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{userName}}</p>
-                            <p style="flex:3;text-align:center;"><span style="color:blue;">目标：</span>每天分享一篇诗文</p>
-                            <p style="flex:1;text-align:center;"><span style="color:blue;">已坚持：</span>29天</p>
+                        <div class="myIndexBody3Quare" style="color:orangered;background:-webkit-gradient(linear,left 0,right 0,from(darkseagreen),to(#42b275));">
+                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{topIndex[0].userName}}</p>
+                            <p style="flex:3;text-align:center;">当前分享：{{topIndex[0].topIndex}}</p>
+                            <p style="flex:1;text-align:center;">top1</p>
                         </div>
                     </li>
                     <li>
-                        <div class="myIndexBody3Ball wow bounceInLeft" data-wow-delay="0.25s" style=" left:180px;background: url(http://olcolkmpd.bkt.clouddn.com/{{userImg}});background-size:100% 100%;">
+                        <div class="myIndexBody3Ball wow bounceInLeft" data-wow-delay="0.25s" style=" left:180px;background: url(http://olcolkmpd.bkt.clouddn.com/{{topIndex[1].userImg}});background-size:100% 100%;">
                             top:2
                         </div>
-                        <div class="myIndexBody3Quare" style="background:-webkit-gradient(linear,left 0,right 0,from(#44b5bc),to(#234bb2));">
-                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{userName}}</p>
-                            <p style="flex:3;text-align:center;"><span style="color:blue;">目标：</span>每天分享一篇诗文</p>
-                            <p style="flex:1;text-align:center;"><span style="color:blue;">已坚持：</span>29天</p>
+                        <div class="myIndexBody3Quare" style="color:white;background:-webkit-gradient(linear,left 0,right 0,from(#44b5bc),to(#234bb2));">
+                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{topIndex[1].userName}}</p>
+                            <p style="flex:3;text-align:center;">当前分享：{{topIndex[1].topIndex}}</p>
+                            <p style="flex:1;text-align:center;">top2</p>
                         </div>
                     </li>
                     <li>
-                        <div class="myIndexBody3Ball wow bounceInLeft" data-wow-delay="0.5s" style=" left:280px;background: url(http://olcolkmpd.bkt.clouddn.com/{{userImg}});background-size:100% 100%;">
+                        <div class="myIndexBody3Ball wow bounceInLeft" data-wow-delay="0.5s" style=" left:280px;background: url(http://olcolkmpd.bkt.clouddn.com/{{topIndex[2].userImg}});background-size:100% 100%;">
                             top:3
                         </div>
-                        <div class="myIndexBody3Quare" style="background:-webkit-gradient(linear,left 0,right 0,from(#512bb2),to(#bc75af));">
-                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{userName}}</p>
-                            <p style="flex:3;text-align:center;"><span style="color:blue;">目标：</span>每天分享一篇诗文</p>
-                            <p style="flex:1;text-align:center;"><span style="color:blue;">已坚持：</span>29天</p>
+                        <div class="myIndexBody3Quare" style="color:lightgray;background:-webkit-gradient(linear,left 0,right 0,from(#512bb2),to(#bc75af));">
+                            <p style="flex:1;font-size:20px;font-weight:bold;text-align:right">{{topIndex[2].userName}}</p>
+                            <p style="flex:3;text-align:center;">当前分享：{{topIndex[2].topIndex}}</p>
+                            <p style="flex:1;text-align:center;">top3</p>
                         </div>
                     </li>
                 </ul>

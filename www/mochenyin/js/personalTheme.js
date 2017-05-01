@@ -8,7 +8,6 @@ function getPersonalThemePageController($scope){
             let saveObj=res.data.rows3;
             let thumbObj=res.data.rows4;
             let answerObj=res.data.rows5;
-            console.log(answerObj)
             for(var key in resQ){
                 if(resQ[key].themeImages){
                     let length=resQ[key].themeImages.length;
@@ -47,5 +46,19 @@ function getPersonalThemePageController($scope){
                 $scope.themeArray=resQ;
             });
         }
-    })
+    });
+    $scope.deleteTheme=function(themeId,index){
+        var a = confirm("您确定要删除吗？");
+        if (a) {
+            $.post("/api/deleteTheme", {themeId:themeId}, function (res) {
+                if(res.text=='ok'){
+                    $scope.text='删除成功';
+                    boxshow($scope.text);
+                   $scope.$apply(function(){
+                       $scope.themeArray.splice(index, 1);
+                   })
+                }
+            });
+        };
+    }
 }

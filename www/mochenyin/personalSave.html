@@ -1,1 +1,19 @@
-<h1>save</h1>
+<ul style="padding:40px 0 0 0;list-style: none">
+    <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
+        <a ui-sref="silence.themePage({themeId:'{{val.themeId}}',classifyId:'{{val.classifyId}}'})" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
+            <div style="width:100px;text-align: center">
+                <p>{{val.userName}}</p>
+                <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" style="width:40px;height:40px;border-radius:50%" />
+            </div>
+            <div style="flex:1;color:black;">
+                <p style="font-weight:bold;">{{val.classifyText}}</p>
+                <p>{{val.themeTitle}}</p>
+                <p>{{val.themeDesc}}</p>
+                <div>
+                    <p style="width:100%;text-align: right">{{val.add_date}}</p>
+                </div>
+            </div>
+        </a>
+    </li>
+</ul>
+<script src="mochenyin/js/personalSave.js"></script>

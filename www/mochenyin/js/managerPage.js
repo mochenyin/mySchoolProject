@@ -11,6 +11,7 @@ var app = angular.module('app', ['ngRoute'])
     .controller('changeImgMngrController',function($scope,$route){$scope.$route=$route;})
     .controller('userMngrController',function($scope,$route){$scope.$route=$route;})
     .controller('imgMngrController',function($scope,$route){$scope.$route=$route;})
+    .controller('themeMngrController',function($scope,$route){$scope.$route=$route;})
     .config(['$routeProvider',function($routeProvider){
         $routeProvider
             .when('/baseMsg',{
@@ -37,6 +38,10 @@ var app = angular.module('app', ['ngRoute'])
                 templateUrl: 'roomMngr.html',
                 controller: 'roomMngrController',
             })
+            .when('/themeMngr',{
+                templateUrl: 'themeMngr.html',
+                controller: 'themeMngrController',
+            })
             .otherwise({redirectTo:'/baseMsg'});
     }]);
 
@@ -52,6 +57,9 @@ app.controller('managerController',function($scope){
 //用户管理页面控制器
 app.controller('userMngrController',function($scope){
      startUserMngrController($scope);
+});
+app.controller('themeMngrController',function($scope){
+    startThemeMngrController($scope);
 });
 
 //聊天管理页面控制器

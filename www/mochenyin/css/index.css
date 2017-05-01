@@ -190,6 +190,7 @@ a.indexActive{
   text-decoration: none;
 }
 .myIndexBody2{
+  list-style: none;
   padding:40px 0 0 0;
 }
 .myIndexBody2 li{
@@ -197,7 +198,10 @@ a.indexActive{
   height:200px;
   margin:0 20px 40px 60px !important;
   box-shadow:1px 1px 1px 1px #9E9E9E ;
-  display: inline-block;
+ float:left;
+}
+.glyphicon-remove:hover{
+  color:red;
 }
 .myIndexBody2 li a{
   width:100%;
@@ -424,4 +428,10 @@ a.indexActive{
 }
 .personalActive{
   color:cornflowerblue;
+}
+.otherUserP{
+  width:400px;
+ margin:10px auto;
+ border-bottom: 1px solid lightgray;
+  padding:10px 0;
 }

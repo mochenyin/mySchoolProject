@@ -1,5 +1,5 @@
 <ul style="padding:40px 0 0 0;list-style: none">
-    <li ng-repeat="(k,val) in themeArray" style="width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
+    <li ng-repeat="(k,val) in themeArray" style="position:relative;width:850px;margin:0 auto 40px auto;  box-shadow:1px 1px 1px 1px #9E9E9E ;">
         <a ui-sref="silence.themePage({themeId:'{{val.themeId}}',classifyId:'{{val.classifyId}}'})" style="width:100%;display: flex;flex-flow:row;text-decoration: none;">
             <div style="width:100px;text-align: center">
                 <p>{{val.userName}}</p>
@@ -20,6 +20,7 @@
                 </div>
             </div>
         </a>
+        <span class="glyphicon glyphicon-remove" ng-click="deleteTheme(val.themeId,k)" style="position: absolute;top:0;right:0;"></span>
     </li>
 </ul>
 <script src="mochenyin/js/personalTheme.js"></script>

@@ -1,5 +1,6 @@
 function getThemePageController(themeId,classifyId,$scope) {
         let imagesKey='';
+         $.get('/api/setHistroy',{themeId:themeId,userId:sessionStorage.Key});
         $.post('/api/getThemeDetail',{themeId:themeId},function(res){
             if(res.text=='ok'){
                 let themeMsg=res.data.role[0];

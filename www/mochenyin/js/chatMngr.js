@@ -70,7 +70,8 @@ function startChatMngrController($scope){
                 var a = $scope.filteredNotes.splice($.inArray(this.v, $scope.filteredNotes), 1);
                 $.post("/api/deleteChat", dat, function (res) {
                     if(res.text=='ok'){
-                        alert('删除成功')
+                        $scope.text='删除成功';
+                        boxshow($scope.text)
                     }
                 });
             };

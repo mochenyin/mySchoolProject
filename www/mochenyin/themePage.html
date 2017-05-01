@@ -11,13 +11,13 @@
             <div class="themeLeft">
                 <div></div>
                 <span>楼主</span>
-                <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" />
+               <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{userImg}}" />
                 <p>{{userName}}</p>
             </div>
             <div class="themeRight" style="padding:15px 20px;">
                 <p style="font-weight:700">{{themeDesc}}</p>
                 <p>
-                    <img ng-repeat="img in themeImages" style="width:300px;height:300px;margin:15px;" ng-src="http://olcolkmpd.bkt.clouddn.com/{{img}}" />
+                   <img ng-repeat="img in themeImages" style="width:300px;height:300px;margin:15px;" ng-src="http://olcolkmpd.bkt.clouddn.com/{{img}}" />
                 </p>
                 <p>{{themeContent}}</p>
                 <P>1楼&nbsp;&nbsp;&nbsp;{{add_date}}</P>
@@ -28,7 +28,7 @@
                 <div class="themeLeft">
                     <div class="{{val.className}}"></div>
                     <span class="{{val.className}}">楼主</span>
-                    <img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" />
+                    <a ui-sref="silence.userCard({userId:'{{val.userId}}'})"><img ng-src="http://olcolkmpd.bkt.clouddn.com/{{val.userImg}}" /></a>
                     <p>{{val.userName}}</p>
                 </div>
                 <div class="themeRight" style="padding:15px 20px;">

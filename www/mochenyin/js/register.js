@@ -136,7 +136,8 @@ function registerController($scope){
         if( $scope.catchMsg()==true&&$scope.checkTelNumber()==true&&$scope.getPwd()==true&&$scope.checkPwdAgain()==true){
             let dat={
                 email:$('#number').val(),
-                pwd:hex_md5($('#pwd').val())
+                pwd:hex_md5($('#pwd').val()),
+                userImg:'FuP2PwaHcUbvU2P6-P9quB3b9bFs'
             };
             $.post('/api/register',dat,function(res){
                 if(res.text=='ok'){

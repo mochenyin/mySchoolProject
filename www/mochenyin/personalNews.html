@@ -1,1 +1,38 @@
-<h1>news</h1>
+<div style="width:700px;margin:20px auto;">
+     <h4 style="width:200px;text-align: center;margin:0 auto;">通知</h4>
+    <ul style="list-style: none">
+        <li ng-repeat="(k,val) in action" style="width:100%;padding:10px 20px;border-bottom: 1px dashed lightgray;min-height: 80px;">
+            <p><span style="color:#0086b3">{{val.userName}}</span>在<span style="color:grey">{{val.add_date}}</span>赞了你的评论：</p>
+            <p style="font-weight: bold">{{val.themeTitle}}</p>
+            <p style="text-align: right">{{val.classifyText}}</p>
+        </li>
+    </ul>
+     <h4 style="width:200px;text-align: center;margin:0 auto;">消息</h4>
+    <ul style="list-style: none">
+        <li ng-repeat="(i,v) in news" style="width:100%;padding:10px 20px;border-bottom: 1px dashed lightgray;min-height: 80px;">
+            <p style="float:left;width:100px;text-align: center">
+                <span style="color:#0086b3">{{v.userName}}</span><br/>
+                <a ui-sref="silence.userCard({userId:'{{v.userId}}'})"><img style="width:40px;height:40px;border-radius: 50%;" ng-src="http://olcolkmpd.bkt.clouddn.com/{{v.userImg}}" /></a>
+            </p>
+            <p style="float:left;width:500px;">{{v.newsContent}}</p>
+            <p style="clear:both;width:100%;text-align: right"><span style="color:grey">{{v.add_date}}</span></p>
+            <p style="clear:both;width:100%;text-align: right">
+                <span style="cursor: pointer" ng-click="deleteNews(v.newsId,i)">删除</span>&nbsp;&nbsp;&nbsp;<span style="cursor: pointer" ng-click="sendNews(v.userId)">回复</span></p>
+        </li>
+    </ul>
+</div>
+<div class="modal fade addNews" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="min-height:300px;padding:10px 20px;position: relative;">
+            <form class="form-chat" role="form" onsubmit="return false;">
+                <span>发消息：</span><span style="display:none;color:red;" id="textNewsMsg"></span>
+                <textarea id="textNews" ng-blur="checkContent()" class="form-control" placeholder="@{{userName}}" maxlength="800" style="width:80%;margin:0 auto;min-height: 200px;"></textarea>
+                <div style="width:50%;position: absolute;bottom:20px;right:40px;">
+                    <button class="btn btn-primary pull-right" style="margin-left:20px;" ng-click="getTagMsg()">确定</button>
+                    <button class="btn btn-default pull-right"  ng-click="cancelClick()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="mochenyin/js/personalNews.js"></script>

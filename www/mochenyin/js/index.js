@@ -49,7 +49,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             controller: 'indexBodyClassifyController',
         })
         .state('silence.userCard',{
-            url:'/userCard',
+            url:'/userCard/:userId',
             templateUrl:'mochenyin/userCard.html',
             controller:'userCardController'
         })
@@ -96,6 +96,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('silence.personalPage.news',{
             url:'/news',
             templateUrl: 'mochenyin/personalNews.html',
+            controller:'indexPersonalNewsController'
         })
         .state('silence.personalPage.theme',{
             url:'/theme',
@@ -105,18 +106,22 @@ app.config(function($stateProvider, $urlRouterProvider) {
         .state('silence.personalPage.browser',{
             url:'/browser',
             templateUrl: 'mochenyin/personalBrowser.html',
+            controller:'indexPersonalBrowserController'
         })
         .state('silence.personalPage.save',{
             url:'/save',
             templateUrl: 'mochenyin/personalSave.html',
+            controller:'indexPersonalSaveController'
         })
         .state('silence.personalPage.care',{
             url:'/care',
             templateUrl: 'mochenyin/personalCare.html',
+            controller:'indexPersonalCareController'
         })
         .state('silence.personalPage.fans',{
             url:'/fans',
             templateUrl: 'mochenyin/personalFans.html',
+            controller:'indexPersonalFansController'
         })
 });
 app.run(function ($rootScope) {
@@ -152,8 +157,8 @@ app.controller('indexBodyClassifyController',function($stateParams,$scope){
     startIndexBodyClassify($stateParams.id,$scope);
 });
 //用户卡片页面控制器
-app.controller('userCardController',function($scope){
-   startUserCard($scope);
+app.controller('userCardController',function($stateParams,$scope){
+   startUserCard($stateParams.userId,$scope);
 });
 
 //聊天室页面控制器
@@ -197,6 +202,26 @@ app.controller('indexPersonalBaseController',function($scope){
 app.controller('indexPersonalThemeController',function($scope){
     $('.personalA:eq(2)').addClass('personalActive');
     getPersonalThemePageController($scope)
+});
+app.controller('indexPersonalBrowserController',function($scope){
+    $('.personalA:eq(3)').addClass('personalActive');
+    getPersonalBrowserPageController($scope)
+});
+app.controller('indexPersonalSaveController',function($scope){
+    $('.personalA:eq(4)').addClass('personalActive');
+    getPersonalSavePageController($scope)
+});
+app.controller('indexPersonalCareController',function($scope){
+    $('.personalA:eq(5)').addClass('personalActive');
+    getPersonalCarePageController($scope)
+});
+app.controller('indexPersonalFansController',function($scope){
+    $('.personalA:eq(6)').addClass('personalActive');
+    getPersonalFansPageController($scope)
+});
+app.controller('indexPersonalNewsController',function($scope){
+    $('.personalA:eq(1)').addClass('personalActive');
+    getPersonalNewsPageController($scope)
 });
 //主题页面控制器
 app.controller('themePageController',function($stateParams,$scope){
