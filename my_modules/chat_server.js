@@ -3,29 +3,28 @@
  */
 var onlineUserCount=0; //客户端连接数量
 var onlineUsers={};//统计客户端登录用户
-var currentUser={};
-var currentRoom={};
-var nickNames={};
-var flagIn={};
-var flagOut={};
-var userMsg={};
-var userIdSoc={};
-var preDisconnectUser={};
-var preDisconnectUserArray={};
-var onlineUserId={};
-var onlineUserIdArray={};
-
-var allUser=[];
-var roomUser={};
-var userDetail={};
-var roomUserArray={};
-var userIds={};
-var userIdsArray=[];
-
+var currentUser={};//用来存放当前连接的用户信息
+var currentRoom={};//存放当前房间信息
+var nickNames={};//存放当前房间的所有用户昵称
+var flagIn={};//用户进入房间标识
+var flagOut={};//用户退出房间标识
+var userMsg={};//存放用户消息
+var userIdSoc={};//用户Socket.id
+var preDisconnectUser={};//当前预退出房间的用户
+var preDisconnectUserArray={};//所有预退出房间的用户
+var onlineUserId={};//存放当前在线用户id
+var onlineUserIdArray={};//存放所有在线用户id
+var allUser=[];//所有用户
+var roomUser={};//当前房间用户（字符串）
+var userDetail={};//用户具体信息
+var roomUserArray={};//当前房间用户（数组）
+var userIds={};//用户Id(字符串)
+var userIdsArray=[];//用户Id（数组）
 
 
-function joinRoom(socket,room,userDetail){
-    var usersInRoom= $io.sockets.adapter.rooms[room];
+
+function joinRoom(socket,room,userDetail){//加入房间
+    var usersInRoom= $io.sockets.adapter.rooms[room];//获取该房间的所有连接
     console.log('usersInRoom1',usersInRoom);
     if(!usersInRoom){
         console.log('-1');
@@ -69,13 +68,13 @@ function joinRoom(socket,room,userDetail){
     if(flagIn[socket.id]==1){
         socket.emit('systems',{roomUser:roomUserArray[room],time:getTime(),nickName:nickNames[socket.id],room:room,type:'welcome',to:'self'});
         socket.broadcast.to(room).emit('systems',{roomUser:roomUserArray[room],time:getTime(),nickName:nickNames[socket.id],room:room,type:'welcome',to:'other'});
+        //给除了自己以外的客户端广播消息
     }
-
 }
-
-var _webSocket=$io.on('connection',function(socket){
-    socket.emit('open');//通知客户端已连接
-    socket.on('get name',function(msg,room,userImg,userId){
+//每一个连接都有唯一标识的key
+var _webSocket=$io.on('connection',function(socket){//监听客户端连接,回调函数会传递本次连接的socket
+    socket.emit('open');//给该socket的客户端发送消息//通知客户端已连接
+    socket.on('get name',function(msg,room,userImg,userId){//监听客户端发送的信息
         nickNames[socket.id]=msg;
         currentRoom[socket.id]=room;
         var imgUrl=userImg+'';
@@ -120,7 +119,8 @@ var _webSocket=$io.on('connection',function(socket){
         socket.broadcast.to(currentRoom[socket.id]).emit('chatMsg',obj2); //向其他用户发送消息
     });
 
-    socket.on('disconnect',function() {
+    socket.on('disconnect',function() {//用户断开连接后执行的操作
+        //将断开连接的用户id添加到待下线用户列表中，如果5秒内重新连接上时则删除该待下线列表中的该用户Id，防止用户操作失误导致的连接断开而下线
         if(preDisconnectUser[currentRoom[socket.id]]==undefined){
             preDisconnectUser[currentRoom[socket.id]]=userIds[socket.id]+'';
         }
@@ -128,6 +128,7 @@ var _webSocket=$io.on('connection',function(socket){
             preDisconnectUser[currentRoom[socket.id]]+=';'+userIds[socket.id];
         }
         preDisconnectUserArray[currentRoom[socket.id]]=preDisconnectUser[currentRoom[socket.id]].split(';');
+        //3秒后如果待下线列表中仍有该用户Id则判断该用户下线了
         setTimeout(function(){
             if(preDisconnectUserArray[currentRoom[socket.id]]!=undefined){
                 if(preDisconnectUserArray[currentRoom[socket.id]].indexOf(userIds[socket.id])>=0){

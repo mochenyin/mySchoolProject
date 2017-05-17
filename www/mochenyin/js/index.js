@@ -1,13 +1,13 @@
 /**
  * Created by SWSD on 2017-02-16.
  */
-var app = angular.module('app', ['ui.router']);
-app.run(function ($rootScope) {
+var app = angular.module('app', ['ui.router']); //AngularJS 模块定义应用
+app.run(function ($rootScope) {  //初始化一个全局提示实例
     $rootScope.alerturl = 'mochenyin/public/alert.html';
 
 });
 app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/silence/index');
+    $urlRouterProvider.otherwise('/silence/index');  //当输入一个未定义的路径则一致跳转到/silence/index状态
     $stateProvider
         .state('silence',{
             url:'/silence',
@@ -29,12 +29,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'mochenyin/findPwd.html',
             controller: 'findPwdController',
         })
-        .state('silence.themePage',{
-            url:'/themePage/:themeId&&:classifyId',
+        .state('silence.themePage',{  //路由状态
+            url:'/themePage/:themeId&&:classifyId', //url路径及参数
             views:{
                 '@':{
-                    templateUrl: 'mochenyin/themePage.html',
-                    controller: 'themePageController',
+                    templateUrl: 'mochenyin/themePage.html', //视图模板
+                    controller: 'themePageController', //对应控制器
                 }
             }
         })
@@ -176,9 +176,11 @@ app.controller('subChatController',function($stateParams,$scope){
 });
 //分类随记控制器
 app.controller('chatClassifyController',function($stateParams,$scope){
+//$stateParams为参数对象，$scope对象的属性可在html中获取
     $.post('/api/getChatClassify',{type:$stateParams.name},function(res){
+        //运用ajax的post方式去请求koa路由，res为返回值
         if(res.text=='ok'){
-            $scope.$apply(function(){
+            $scope.$apply(function(){  //手动更新$scope
                 $scope.title=res.data.classify[0].chatName;
             });
             getChatClassify($scope,res.data.list);

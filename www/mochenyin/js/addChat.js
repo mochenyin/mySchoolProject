@@ -10,7 +10,7 @@ function addChatController($scope){
             })
         }
     });
-    $.post('/api/getToken',function(res){
+    $.post('/api/getToken',function(res){//请求token
         uploader2 = Qiniu.uploader({
             runtimes: 'html5,flash,html4',
             browse_button: 'pickfiles2',//上传按钮的ID
@@ -19,8 +19,7 @@ function addChatController($scope){
             max_file_size: '2mb',//最大文件限制
             flash_swf_url: '/js-sdk-master/js-sdk-master/demo/dist/Moxie.swf',
             dragdrop: false,
-            uptoken : res.data,
-            //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+            uptoken : res.data, //由后台服务获取到的token
             unique_names: true,
             // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
             save_key: true,

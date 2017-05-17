@@ -74,10 +74,10 @@ function startUserMngrController($scope){
         })
 });
     $scope.selOptions=[{key:0,value:'普通用户'},{key:1,value:'管理员'},{key:2,value:'超级管理员'}];
-    $scope.selectChange=function(selValue,role,userId){
+    $scope.selectChange=function(selValue,role,userId){//修改用户角色
        if((sessionStorage.role==1&&role==0)||(sessionStorage.role==2&&role==0)){
             if(sessionStorage.role==1&&selValue.key==2){
-                alert('您的权限不足')
+                alert('您的权限不足')//管理员只能对普通用户进行管理，并且无权限涉及到超级管理员层面
             }
            else{
                 let name=selValue.key==2?'超级管理员':'管理员';
@@ -93,7 +93,7 @@ function startUserMngrController($scope){
             }
        }
         else{
-           if(sessionStorage.role==2&&role==1){
+           if(sessionStorage.role==2&&role==1){//超级管理员可对所有网站用户进行管理及权限修改
                 let name=selValue.key==0?'普通用户':'超级管理员';
                var c = confirm("您确定要将该用户设为"+name+"吗？");
                if (c) {

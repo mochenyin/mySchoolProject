@@ -6,10 +6,8 @@ var _qn={};
 //需要填写你的 Access Key 和 Secret Key
 $qiniu.conf.ACCESS_KEY = 'nyn08w1WGp6GxYfBbDr-mF-EV7dznhtxVGfWSrLG';
 $qiniu.conf.SECRET_KEY = 'tGx2SxQc1roW0zN0xWc44SilSyXuRBX0UKHvpGCf';
-//要上传的空间
-bucket = 'ltmochenyin';
-//上传到七牛后保存的文件名
-key = 'my-nodejs-logo.png';
+bucket = 'ltmochenyin';//要上传的空间
+key = 'my-nodejs-logo.png';//上传到七牛后保存的文件名
 //构建上传策略函数，设置回调的url以及需要回调给业务服务器的数据
 function uptoken(bucket) {
     var putPolicy = new $qiniu.rs.PutPolicy(bucket);
@@ -17,7 +15,7 @@ function uptoken(bucket) {
 }
 //生成上传 Token
 _token = uptoken(bucket);
-
+module.exports =_token;
 
 
 //要上传文件的本地路径
@@ -37,7 +35,7 @@ _token = uptoken(bucket);
 //     });
 // }
 // _uploadFile=uploadFile(filePath);
-module.exports =_token;
+
 // //调用uploadFile上传
 // uploadFile(token, key, filePath);
 

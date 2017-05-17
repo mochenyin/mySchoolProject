@@ -3,9 +3,9 @@
  */
 // var nodemailer = require('nodemailer');
 // var smtpTransport =require('nodemailer-smtp-transport');
-
+//mail.js
 var  email={
-    service: 'QQ',
+    service: 'QQ', //用QQ账号作为发送方账号
     user: '978145022@qq.com',
     pass: 'usbojgoyvjecbdch',
     };
@@ -17,7 +17,7 @@ var _sendMail= $nodemailer.createTransport($smtpTransport({
         pass: email.pass
     }
 }));
-
+module.exports = _sendMail;//导出模块
 
 /**
  * @param {String} recipient 收件人
@@ -40,4 +40,3 @@ var _sendMail= $nodemailer.createTransport($smtpTransport({
 //     });
 //};
 
-module.exports = _sendMail;
