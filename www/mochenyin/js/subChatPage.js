@@ -66,22 +66,24 @@ function subChatController($scope,roomId){
     };
 
 
-    var socket= io('http://localhost:8000');//todo:更换服务器ip
-    socket.on('open',function(){
+    var socket= io('http://182.254.243.74');//todo:更换服务器ip
+    //建立一个socket连接
+    socket.on('open',function(){//接收服务端发过来的‘open'消息
         if(sessionStorage.userName==null){
             socket.emit('get name','guest'+sessionStorage.Key,roomId,sessionStorage.userImg,sessionStorage.Key);
+        //将进入房间的用户信息发送给服务端，服务端进行用户将加入房间的操作
         }
         else{
             socket.emit('get name',sessionStorage.userName,roomId,sessionStorage.userImg,sessionStorage.Key);
         }
     });
-    socket.on('joinResult',function(json){
+    socket.on('joinResult',function(json){//服务端将房间的加入结果告诉给客户端
        console.log('json',json);
         $scope.$apply(function() {
             $scope.userList = json.roomUser;
         })
     });
-    socket.on('systems',function(json){
+    socket.on('systems',function(json){//接收系统消息，并进行相应处理
         if(json.type=='welcome') {
             $scope.$apply(function () {
                 $scope.userList = json.roomUser;
@@ -93,7 +95,7 @@ function subChatController($scope,roomId){
                 $('#messages').append($('<li class="systemsMsg">').html('欢迎' + '<span style="color:blue">' + json.nickName + '</span>' + '加入群聊 ' + '<span style="color:grey">' + json.time + '</span>'));
             }
         }
-        else if(json.type==='disconnect'){
+        else if(json.type==='disconnect'){//断开连接
             $scope.$apply(function(){
                 $scope.userList = json.roomUser;
             });
@@ -119,6 +121,7 @@ function subChatController($scope,roomId){
                 '<div class="msgDiv2Other"><p class="myMessage" style="background:'+color+'">'+json.chatMessage+'</p></div>'));
         }
         $('#myDivContent').scrollTop($('#messages').height());
+        //将滚动条定位到底部
     });
     var obj=$('#sendMsg');
     obj.keydown(function(e){

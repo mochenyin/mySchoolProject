@@ -1,15 +1,14 @@
+//mysql_.js
 var wrapper = require('co-mysql');
 var wrapperedConn;
-
 function handleMysql() {
 	var conn = $mysql.createConnection({
-		host:'182.254.243.74',
-		port:'3306',
-		database:'myProject',
-		user:'root',
-		password:'Nchu-3245'
+		host:'182.254.243.74', //IP
+		port:'3306',//端口
+		database:'myProject',//数据库
+		user:'root',//用户名
+		password:'Nchu-3245'//用户密码
 	});
-
 	//连接错误，2秒重试
 	conn.connect(function (err) {
 		if (err) {
@@ -17,7 +16,6 @@ function handleMysql() {
 			setTimeout(handleMysql, 5000);
 		}
 	});
-
 	conn.on('error', function (err) {
 		console.log("db error :" + err);
 		// 如果是连接断开，自动重新连接

@@ -151,7 +151,8 @@ $.get('/api/getChangeImg',data,function(res){
            }
        })
    };
-    $scope.changeFlag=function(val,flag){
+    $scope.changeFlag=function(val,flag){//将该图片的状态标识及ID传递给后台程序，
+        // 并对数据表进行操作，flag为1则使用，为0则取消使用
         $.post('/api/switchImgFlag',{flag:flag,imgId:val.imgId,},function(res){
             if(res.text=='ok'){
                 if(flag==0){

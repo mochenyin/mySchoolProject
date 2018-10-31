@@ -2,9 +2,8 @@
 /*http路由分发
 接口模式server/:app/:api
 */
-
+//rotr.js
 var _rotr = {};
-
 //http请求的路由控制
 _rotr = new $router();
 
@@ -16,10 +15,7 @@ _rotr.post('api', '/api/:apiname', apihandler);
 
 
 
-/*所有api处理函数都收集到这里
-必须是返回promise
-各个api处理函数用promise衔接,return传递ctx
-*/
+/*所有api处理函数都收集到这里必须是返回promise各个api处理函数用promise衔接,return传递ctx*/
 _rotr.apis = {};
 
 /*处理Api请求
@@ -75,7 +71,7 @@ _rotr.apis.checkMailMsg = function () {
 		var rows = yield _ctnu(
 			_sendMail.sendMail({
 				from:'978145022@qq.com',
-				to: recipient,
+				to: recipient,//客户端用户输入的邮箱账号
 				subject: subject,
 				html: html
 			})
@@ -334,14 +330,16 @@ _rotr.apis.addChatRoom = function () {
 };
 
 //获取对应聊天分类内容
-_rotr.apis.getChatClassify = function () {
+_rotr.apis.getChatClassify = function () {//请求/api/getChatClassify路由时执行
 	var ctx = this;
 	var co = $co(function* () {
-		var type = ctx.query.type || ctx.request.body.type;
+		var type = ctx.query.type || ctx.request.body.type;//客户端传过来的参数
 		var paramtcl=[type];
 		var sqlstr = "SELECT * FROM room  where roomStyle =(select chatId from chatStyle where chatTitle=?);";
 		var sqlstr2='select chatName from chatStyle where chatTitle=?;';
+		//数据库查询操作
 		var rows = yield _ctnu([_Mysql.conn, 'query'], sqlstr,paramtcl);
+		//es6中的yield关键字，可暂停执行，在此的作用为当从数据库中拿到返回值时再往下执行
 		var rows2 = yield _ctnu([_Mysql.conn, 'query'], sqlstr2,paramtcl);
 		if(rows&&rows2){
 			ctx.body = __newMsg(1, 'ok', {list:rows,classify:rows2});

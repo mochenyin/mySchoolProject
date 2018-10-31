@@ -1,0 +1,71 @@
+<style>
+    table {
+        table-layout: fixed;
+    }
+
+    td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    thead tr td{
+        font-weight:bold;
+    }
+</style>
+<div style="height:520px;">
+    <div>
+        <label>输入关键字检索 :</label>
+        <input type="text" ng-model="textValue" />
+    </div>
+    <table id="thispage" class="table table-bordered table-hover table-responsive" style="margin: 0 auto;text-align: center">
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 10%" />
+        <col style="width: 20%" />
+        <col style="width: 30%" />
+        <col style="width: 10%" />
+        <thead>
+        <tr>
+            <td>发布者</td>
+            <td>主题号</td>
+            <td>分类</td>
+            <td>主题标题</td>
+            <td>发布时间</td>
+            <td>主题描述</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(k,v) in filteredNotes | filter:textValue">
+            <td ng-bind="v.userName"></td>
+            <td ng-bind="v.themeId"></td>
+            <td ng-bind="v.classifyText"></td>
+            <td ng-bind="v.themeTitle"></td>
+            <td ng-bind="v.add_date"></td>
+            <td ng-bind="v.themeDesc"></td>
+            <td>
+                <div  class="btn btn-danger btn-sm" ng-click="delete(v.themeId)">删除</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div style="width:100%;height:100px;">
+    <nav aria-label="Page navigation">
+        <ul class="pagination pull-right">
+            <li class="previous">
+                <a  aria-label="Previous" ng-click="prePage($event)">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="(k,v) in items" class="clickLi"><a ng-click="page()">{{v.i}}</a></li>
+            <li  class="next">
+                <a  aria-label="Next" ng-click="nextPage()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script src="js/themeMngr.js"></script>

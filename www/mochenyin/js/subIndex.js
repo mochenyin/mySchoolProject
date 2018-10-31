@@ -24,17 +24,17 @@ function indexHeaderController($scope){
         $('#toggleStaute').html('<h4 onclick={window.location="/#/register"}>注册</h4>')
     });
     //图片裁剪
-    $('.image-editor').cropit({
+    $('.image-editor').cropit({//图片裁剪框
         imageBackground: true,
     });
     $('.rotate-cw').click(function () {
-        $('.image-editor').cropit('rotateCW');
+        $('.image-editor').cropit('rotateCW');//点击$('.rotate-cw')后图片顺时针旋转
     });
     $('.rotate-ccw').click(function () {
-        $('.image-editor').cropit('rotateCCW');
+        $('.image-editor').cropit('rotateCCW');//点击$('.rotate-ccw')后图片逆时针旋转
     });
     var formData = new FormData();
-    $('.export').click(function () {
+    $('.export').click(function () {//点击$('.export')后将对裁剪框中的图片进行裁剪，并获得裁剪后base64编码形式的图片
         var imageData = $('.image-editor').cropit('export');
         if(imageData){
             var newImageData=imageData.split(',')[1];
@@ -52,17 +52,17 @@ function indexHeaderController($scope){
             $.post('/api/getToken',function(res){
                 function putb64(){
                     var pic = newImageData;
-                    var url = "http://upload-z1.qiniu.com/putb64/"+fSize;
+                    var url = "http://upload-z1.qiniu.com/putb64/"+fSize;//请求的路径
                     var xhr = new XMLHttpRequest();
                     xhr.onreadystatechange=function(){
-                        if (xhr.readyState==4){
+                        if (xhr.readyState==4){//ajax请求成功
                             let obj=eval('('+xhr.responseText+')');
                             let data={
-                                key:obj.key,
+                                key:obj.key, //上传成功后获取的Key
                                 userId:sessionStorage.Key
                             };
                             if(obj.key){
-                                $.post('/api/changeUserImg',data,function(respon){
+                                $.post('/api/changeUserImg',data,function(respon){//对数据库里该用户的头像字段存储的key值进行修改
                                     console.log(respon);
                                     if(res.text='ok'){
                                         $scope.$apply(function () {
@@ -70,7 +70,7 @@ function indexHeaderController($scope){
                                         });
                                         $('#myModal1').modal('hide');
                                         $('#userImg').attr('src','http://olcolkmpd.bkt.clouddn.com/'+respon.data[0].userImg);
-                                        sessionStorage.userImg=obj.key;
+                                        sessionStorage.userImg=obj.key;//修改成功后，重写用户头像的sessionStorage
                                     }
                                     else{
                                         $scope.$apply(function () {

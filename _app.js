@@ -1,6 +1,8 @@
 /*专为其他App提供后端服务，如文件存储服务（qiniu）
  */
+//_app.js
 var _app = global._app = {};
+//自定义端口号
 _app.hostPort = 8000;
 
 //外部库引入
@@ -15,7 +17,7 @@ var $bodyParser = global.$bodyParser = require('koa-bodyparser');
 var $mysql = global.$mysql = require('mysql');
 var $crypto = global.$crypto = require('crypto');
 var $socketio = global.$socketio = require('socket.io');
-var $nodemailer = global.$nodemailer=require('nodemailer');
+var $nodemailer = global.$nodemailer=require('nodemailer');//导入nodemailer模块
 var $smtpTransport = global.$smtpTransport=require('nodemailer-smtp-transport');
 var $qiniu=global.$qiniu=require('qiniu');
 

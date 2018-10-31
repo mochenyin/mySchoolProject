@@ -2,8 +2,8 @@
 ctnu返回continuable的可继续执行的异步函数
 有两个版本，但只导出第一个
  */
+//ctnu.js
 var _ctnu = {};
-
 /*生成可以作为co中yield函数的continuable函数，Promise版本
 可以接受1～4个参数
 如果第一个参数如果是数字，当作sleep的毫秒数，后面参数忽略；
